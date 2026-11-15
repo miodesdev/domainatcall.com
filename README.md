@@ -11,7 +11,7 @@ Ohne Konto, ohne Tracking, ohne Build-Schritt: reines HTML/CSS/JS, gehostet übe
 | `index.html` | das Tool (Startseite), Texte in DE/EN/RU |
 | `hilfe.html`, `nutzungsbedingungen.html` | Hilfe und Nutzungsbedingungen |
 | `datenschutz.html`, `impressum.html` | Rechtliche Seiten |
-| `style.css`, `site.js` | gemeinsames Design, Sprachumschaltung (`?lang=de\|en\|ru`), Menü |
+| `style.css`, `site.js` | gemeinsames Design, Sprachumschaltung (`?lang=de\|en\|ru`, Browsersprache DE/RU, sonst Englisch), Menü |
 | `CNAME` | Custom Domain für GitHub Pages (`domainatcall.com`) |
 | `404.html`, `robots.txt`, `sitemap.xml`, `.nojekyll` | Pages-/SEO-Grundlagen |
 

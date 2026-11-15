@@ -1,8 +1,8 @@
 {
   "name": "Domain at Call",
   "short_name": "Domain at Call",
-  "description": "Prüft im Browser, ob Domainnamen frei sind.",
-  "lang": "de",
+  "description": "Check domain names in your browser.",
+  "lang": "en",
   "icons": [
     {"src": "/icon-192.png", "sizes": "192x192", "type": "image/png"},
     {"src": "/icon-512.png", "sizes": "512x512", "type": "image/png"},
