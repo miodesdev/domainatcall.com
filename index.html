@@ -1,0 +1,591 @@
+<!doctype html>
+<html lang="de" data-lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Domain at Call – Domainnamen prüfen</title>
+<meta name="description" content="Domain at Call: prüft im Browser, ob Domainnamen frei sind. Ohne Konto, ohne Tracking.">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png?v=4">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png?v=4">
+<link rel="icon" href="favicon-adaptiv.svg?v=4" type="image/svg+xml" sizes="any">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=4">
+<link rel="manifest" href="site.webmanifest?v=4">
+<link rel="canonical" href="https://domainatcall.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Domain at Call">
+<meta property="og:title" content="Domain at Call – Domainnamen prüfen">
+<meta property="og:description" content="Prüft im Browser, ob Domainnamen frei sind. Ohne Konto, ohne Tracking.">
+<meta property="og:url" content="https://domainatcall.com/">
+<meta property="og:image" content="https://domainatcall.com/icon-512.png">
+<meta name="twitter:card" content="summary">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#1637E8">
+<link rel="stylesheet" href="style.css">
+<style>
+#tool{--h:178;--s:22%;--bg:hsl(var(--h) var(--s) 95%);--panel:#fff;--ink:#13201f;--mute:#5c6e6c;--line:hsl(var(--h) calc(var(--s)*.6) 80%);--acc:hsl(var(--h) 75% 27%);--accbg:hsl(var(--h) var(--s) 87%);--ok:#17924f;--okbg:#d8f3e3;--bad:#c0392b;--warn:#b86e00}
+#tool[data-theme=blue]{--h:210;--s:70%}
+#tool[data-theme=white]{--h:215;--s:0%}
+#tool[data-theme=yellow]{--h:48;--s:85%}
+#tool[data-theme=pink]{--h:340;--s:75%}
+#tool[data-theme=green]{--h:135;--s:45%}
+@media(prefers-color-scheme:dark){#tool{--bg:hsl(var(--h) calc(var(--s)*.5) 8%);--panel:hsl(var(--h) calc(var(--s)*.5) 12%);--ink:#e8eeee;--mute:#98a8a8;--line:hsl(var(--h) calc(var(--s)*.4) 22%);--acc:hsl(var(--h) 65% 72%);--accbg:hsl(var(--h) calc(var(--s)*.6) 20%);--ok:#4ade80;--okbg:#17372a;--bad:#ff7b6b;--warn:#f0a63a}}
+#tool *{box-sizing:border-box}
+#tool button,#tool input,#tool textarea,#tool select{font:inherit;color:inherit}
+#tool button{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:6px 12px;cursor:pointer}
+#tool button:hover:not(:disabled){border-color:var(--acc)}
+#tool button:disabled{opacity:.45;cursor:not-allowed}
+#tool button.primary{background:var(--acc);color:var(--bg);border-color:var(--acc);font-weight:650;padding:8px 22px}
+#tool button.link{background:none;border:0;color:var(--acc);padding:2px 4px;text-decoration:underline}
+#tool :focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+#tool .seg{display:inline-flex;border:1px solid var(--line);border-radius:9px;overflow:hidden;background:var(--panel)}
+#tool .seg button{border:0;border-radius:0;background:none;padding:6px 14px}
+#tool .seg button:focus-visible{outline-offset:-3px}
+#tool .seg button.on{background:var(--accbg);color:var(--acc);font-weight:650}
+#tool .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:12px}
+#tool .card h2{font-size:17px;margin:0 0 8px}
+#tool label.h,#tool .h{display:block;font-size:12px;font-weight:600;color:var(--mute);margin-bottom:4px}
+#tool textarea,#tool input[type=text]{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+#tool textarea{font-family:ui-monospace,Menlo,Consolas,monospace;height:84px;resize:vertical}
+#tool .row{display:flex;flex-wrap:wrap;gap:8px 22px;align-items:flex-start}
+#tool .chips{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+#tool .chip{border-radius:999px;padding:3px 12px;font-size:13px}
+#tool .chip.on{background:var(--accbg);color:var(--acc);border-color:var(--acc)}
+#tool .cb{display:inline-flex;gap:6px;align-items:center;margin-right:12px;white-space:nowrap}
+#tool .tldgrid{display:flex;flex-wrap:wrap;gap:4px 0;margin-top:10px}
+#tool .cust{display:inline-flex;align-items:center;gap:3px;margin-right:10px}
+#tool .cust input[type=text]{width:58px;padding:3px 6px}
+#tool .cust input.bad{color:var(--bad)}
+#tool .note{font-size:12.5px;color:var(--mute)}
+#tool .warn{color:var(--warn)}
+#tool .err{color:var(--bad)}
+#tool .tabs{display:flex;gap:6px;border-bottom:1px solid var(--line);margin-bottom:12px;flex-wrap:wrap}
+#tool .tabs button{border:0;border-radius:8px 8px 0 0;background:none;color:var(--mute);padding:9px 14px;border-bottom:3px solid transparent;font-weight:550}
+#tool .tabs button.on{color:var(--acc);background:var(--accbg);border-bottom-color:var(--acc)}
+#tool .ctl{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:14px 0 10px}
+#tool .ctl .sp{flex:1}
+#tool progress{width:100%;height:8px;accent-color:var(--acc)}
+#tool .tbl{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:auto;max-height:520px;min-height:150px;position:relative}
+#tool table{border-collapse:collapse;width:100%}
+#tool th,#tool td{padding:6px 10px;text-align:center;white-space:nowrap}
+#tool th{position:sticky;top:0;background:var(--panel);border-bottom:1px solid var(--line);z-index:1}
+#tool th:first-child,#tool td:first-child{text-align:left;font-family:ui-monospace,Menlo,Consolas,monospace}
+#tool tr+tr td{border-top:1px solid color-mix(in srgb,var(--line) 50%,transparent)}
+#tool td button.free{border:0;background:var(--okbg);border-radius:8px;padding:2px 9px;font-size:16px}
+#tool td .no{color:var(--line)}
+#tool .empty{padding:34px 16px;text-align:center;color:var(--mute)}
+#tool .empty b{display:block;font-size:30px;margin-bottom:6px}
+#tool #rmenu{position:fixed;z-index:20;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:4px;box-shadow:0 8px 28px rgba(0,0,0,.25);display:none;min-width:210px}
+#tool #rmenu button{display:block;width:100%;text-align:left;border:0;background:none;padding:8px 12px}
+#tool #rmenu button:hover{background:var(--accbg)}
+#tool #rmenu .d{font:12px ui-monospace,monospace;color:var(--mute);padding:4px 12px}
+#tool dialog{border:1px solid var(--line);border-radius:14px;background:var(--panel);color:var(--ink);max-width:520px;width:calc(100% - 32px);padding:20px}
+#tool dialog::backdrop{background:rgba(0,0,0,.45)}
+#tool dialog h2{margin:0 0 12px;font-size:19px}
+#tool dialog section{margin-bottom:14px}
+#tool .favrow{display:flex;gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid var(--line)}
+#tool .favrow code{flex:1;overflow:hidden;text-overflow:ellipsis}
+#tool .foot{margin-top:18px}
+#tool .hide{display:none!important}
+@media(prefers-reduced-motion:no-preference){#tool td button.free{transition:transform .12s}
+#tool td button.free:hover{transform:scale(1.12)}}
+@media(max-width:600px){}
+#tool{font-size:15px;line-height:1.5;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:16px;margin:14px 0}
+#tool .bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:0 0 14px}
+#tool .bar #lvl{margin-right:auto}
+#tool .tbl{max-height:520px}
+/* einheitliche Höhe und Ausrichtung der Bedienelemente */
+#tool{--ch:38px}
+#tool .row{align-items:flex-end}
+#tool input[type=text]{height:var(--ch)}
+#tool .cust input[type=text]{height:30px}
+#tool .seg{min-height:var(--ch);align-items:stretch}
+#tool .seg button{min-height:calc(var(--ch) - 2px);display:inline-flex;align-items:center;justify-content:center;text-align:center;line-height:1.25}
+#tool .cb{min-height:var(--ch)}
+#tool #sLen,#tool #eLen,#tool #ePos{display:flex;flex-wrap:wrap;align-items:center}
+#tool .ctl button,#tool .bar>button{height:var(--ch);display:inline-flex;align-items:center;justify-content:center;padding-top:0;padding-bottom:0}
+.titlerow{display:flex;align-items:center;justify-content:space-between;gap:12px 20px;flex-wrap:wrap;margin:0 0 .6em}
+.titlerow h1{margin:0}
+.donate{display:inline-flex;align-items:center;gap:8px;background:#ffa800;color:#2b1a00!important;font-weight:700;font-size:16px;line-height:1;padding:12px 22px;border-radius:10px;text-decoration:none!important;box-shadow:0 2px 8px rgba(255,168,0,.45);transition:background .15s,transform .15s}
+.donate:hover{background:#ff9100;transform:translateY(-1px)}
+.donate:focus-visible{outline:3px solid #ff9100;outline-offset:3px}
+.donate .de,.donate .en,.donate .ru{color:inherit}
+@media(max-width:520px){.donate{width:100%;justify-content:center}}
+@media(max-width:520px){
+#tool{padding:12px;margin:10px 0}
+#tool .card{padding:12px}
+#tool .bar #lvl{flex:1 1 100%;margin-right:0}
+#tool .bar #lvl button{flex:1}
+#tool .bar #favBtn{flex:1}
+#tool .tabs{flex-wrap:nowrap;overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch;scrollbar-width:thin}
+#tool .tabs button{flex:0 0 auto;padding:9px 12px}
+#tool .ctl{gap:8px}
+#tool .ctl .sp{display:none}
+#tool .ctl #go,#tool .ctl #stop{order:1;flex:1}
+#tool .ctl #copyFree{order:2;flex:1}
+#tool .ctl #est{order:3;flex:1 1 100%}
+#tool th,#tool td{padding:6px 7px}
+#tool .row{gap:10px 16px}
+#tool .seg{max-width:100%}
+#tool .seg button{padding:6px 8px}
+#tool .ctl button{padding-left:8px;padding-right:8px}
+}
+#tool .tabs{position:relative}
+/* aktiver Modus/Tab deutlicher */
+#tool input[type=checkbox]{accent-color:var(--acc)}
+#tool .seg button.on{background:var(--acc);color:var(--bg);font-weight:700}
+#tool .tabs{gap:4px;margin-bottom:0;border-bottom:3px solid var(--acc)}
+#tool .tabs button{border:1px solid var(--line);border-bottom:0;border-radius:10px 10px 0 0;background:var(--panel);color:var(--mute);margin-bottom:0}
+#tool .tabs button:hover:not(.on){border-color:var(--acc);color:var(--ink)}
+#tool .tabs button.on{background:var(--acc);color:var(--bg);border-color:var(--acc);font-weight:700}
+#tool #advBox .card{border:2px solid var(--acc);border-top:0;border-radius:0 0 12px 12px;background:var(--tint)}
+/* keine leere Zeile zwischen Tab-Linie und Inhalt */
+#tool #advBox .card{padding-top:8px;margin-top:0}
+#tool #advBox .tabs{margin-bottom:0}
+/* keine leere Zeile zwischen Tab-Linie und Inhalt */
+#tool #advBox .card{padding-top:8px;margin-top:0}
+#tool #advBox .tabs{margin-bottom:0}
+#tool #advBox .card>div>.row{margin-top:0}
+#tool:has(#advBox:not(.hide)) #tldBox{border-color:var(--acc)}
+/* weiße Eingabefelder, ausgegraut wenn inaktiv, Schalter im Farbton des Schemas */
+#tool{--tint:color-mix(in srgb,var(--acc) 8%,var(--panel));--field:#fff;--off:hsl(var(--h) calc(var(--s)*.12) 91%);--offink:#9aa5a5;--sw:color-mix(in srgb,var(--acc) 9%,var(--panel))}
+@media(prefers-color-scheme:dark){#tool{--field:hsl(var(--h) calc(var(--s)*.4) 18%);--off:hsl(var(--h) calc(var(--s)*.3) 11%);--offink:#6b7777}}
+#tool textarea,#tool input[type=text]{background:var(--field)}
+#tool textarea:disabled,#tool input[type=text]:disabled{background:var(--off);color:var(--offink);border-color:var(--line);cursor:not-allowed;-webkit-text-fill-color:var(--offink);opacity:1}
+#tool label.cb:has(input:disabled){color:var(--offink)}
+#tool .seg button{background:var(--sw)}
+#tool .seg button:hover:not(:disabled):not(.on){background:var(--accbg)}
+#tool .seg button.on{background:var(--acc)}
+#tool .seg button:disabled:not(.on){background:var(--off);color:var(--offink);opacity:1}
+#tool .seg button.on:disabled{opacity:.55}
+#tool .tabs button:not(.on){background:var(--sw)}
+#tool .chip{background:var(--sw)}
+#tool .chip:hover:not(:disabled):not(.on){background:var(--accbg)}
+#tool .chip.on{background:var(--acc);color:var(--bg);border-color:var(--acc);font-weight:650}
+#tool .chip:disabled:not(.on){background:var(--off);color:var(--offink);opacity:1}
+#tool .chip.on:disabled{opacity:.55}
+#tool button.primary:disabled,#tool .ctl button:disabled{background:var(--off);color:var(--offink);border-color:var(--line);opacity:1}
+#tool #themeSeg .chip{display:inline-flex;align-items:center;gap:7px}
+#tool #themeSeg .chip::before{content:"";width:11px;height:11px;border-radius:50%;background:hsl(var(--h) 55% 52%);border:1px solid rgba(0,0,0,.25)}
+#tool #themeSeg .chip[data-th=teal]{--h:178}
+#tool #themeSeg .chip[data-th=blue]{--h:210}
+#tool #themeSeg .chip[data-th=yellow]{--h:48}
+#tool #themeSeg .chip[data-th=pink]{--h:340}
+#tool #themeSeg .chip[data-th=green]{--h:135}
+#tool #themeSeg .chip[data-th=white]::before{background:#fff}
+#tool #simpleBox,#tool #tldBox{background:var(--tint)}
+.wrap{max-width:980px}
+</style>
+<noscript><style>@media (max-width:700px){.burger{display:none!important}.menu{display:block!important}}</style></noscript>
+</head>
+<body data-title-de="Domain at Call – Domainnamen prüfen" data-title-en="Domain at Call – check domain names" data-title-ru="Domain at Call – проверка доменных имён">
+<header><div class="wrap">
+<a class="brand" data-i="index.html" href="index.html"><picture><source media="(prefers-color-scheme: dark)" srcset="logo-dark.svg?v=4"><img src="logo-light.svg?v=4" alt="" width="34" height="34"></picture>Domain at Call</a>
+<button class="burger" type="button" aria-expanded="false" aria-controls="menu"><span class="sr de" lang="de">Menü</span><span class="sr en" lang="en">Menu</span><span class="sr ru" lang="ru">Меню</span><i></i><i></i><i></i></button>
+<div class="menu" id="menu">
+<nav><a data-i="hilfe.html" href="hilfe.html"><span class="de" lang="de">Hilfe</span><span class="en" lang="en">Help</span><span class="ru" lang="ru">Справка</span></a>
+<a href="https://dk-ai.de/" rel="noopener">DK-AI</a></nav>
+<div class="lang" aria-label="Language"><a href="?lang=de" data-l="de" hreflang="de">DE</a><a href="?lang=en" data-l="en" hreflang="en">EN</a><a href="?lang=ru" data-l="ru" hreflang="ru">RU</a></div>
+</div>
+</div></header>
+<main><div class="wrap">
+<div class="titlerow">
+<h1>Domain at Call</h1>
+<a class="donate" href="https://stripe.com/@dkai" target="_blank" rel="noopener">☕ <span class="de" lang="de">Kaffee spendieren</span><span class="en" lang="en">Buy me a coffee</span><span class="ru" lang="ru">Угостить кофе</span></a>
+</div>
+<p class="lead" data-t="lead"></p>
+<div id="tool" data-theme="white">
+<div class="bar">
+  
+  <div class="seg" id="lvl"></div>
+  <button id="favBtn"></button>
+  <button id="setBtn" aria-label="Settings">⚙️</button>
+</div>
+<div class="card" id="simpleBox">
+  <h2 data-t="ask"></h2>
+  <textarea id="kwS" spellcheck="false"></textarea>
+  <div class="note" id="hint"></div>
+</div>
+
+<div class="card" id="tldBox">
+  <div class="chips">
+    <span class="h" style="margin:0" data-t="ext"></span>
+    <span id="presets" class="chips"></span>
+    <span style="flex:1"></span>
+    <button class="link" id="tldMore"></button>
+  </div>
+  <div id="tldSum" class="note" style="margin-top:6px"></div>
+  <div id="tldDetail" class="hide">
+    <div class="tldgrid" id="tldGrid"></div>
+    <div class="tldgrid"><span class="h" style="margin:0 10px 0 0;align-self:center" data-t="custom"></span><span id="custGrid" style="display:flex;flex-wrap:wrap;gap:6px 0"></span></div>
+  </div>
+</div>
+
+<div id="advBox" class="hide">
+  <div class="tabs" id="tabs"></div>
+  <div class="card">
+    <div id="m_keywords">
+      <div class="row">
+        <div><label class="h" data-t="prefix"></label><input type="text" id="prefix" style="width:130px"></div>
+        <div><label class="h" data-t="hyphen"></label><label class="cb"><input type="checkbox" id="hyph"><span data-t="insert"></span></label></div>
+        <div><span class="h" data-t="option"></span><div class="seg" id="pos"></div></div>
+      </div>
+      <div style="margin-top:12px"><label class="h" data-t="names"></label><textarea id="kwA" spellcheck="false"></textarea></div>
+    </div>
+    <div id="m_short" class="hide">
+      <div class="row">
+        <div><span class="h" data-t="len"></span><span id="sLen"></span></div>
+        <div><span class="h" data-t="chars"></span><div class="seg" id="sSet"></div></div>
+      </div>
+    </div>
+    <div id="m_expand" class="hide">
+      <div class="row">
+        <div><label class="h" data-t="kw"></label><input type="text" id="eKw" style="width:200px"></div>
+        <div><span class="h" data-t="extra"></span><span id="eLen"></span></div>
+        <div><span class="h" data-t="chars"></span><div class="seg" id="eSet"></div></div>
+      </div>
+      <div style="margin-top:12px"><span class="h" data-t="goes"></span><span id="ePos"></span></div>
+    </div>
+    <div id="count" class="note" style="margin-top:10px"></div>
+  </div>
+</div>
+
+<div class="ctl">
+  <button class="primary" id="go"></button>
+  <button id="stop" class="hide"></button>
+  <span id="est" class="note"></span>
+  <span class="sp"></span>
+  <button id="copyFree" data-t="copyFree"></button>
+</div>
+<progress id="bar" class="hide" value="0" max="1"></progress>
+<div class="note" id="stats" style="margin:4px 0 8px"></div>
+<div class="tbl" id="tbl"></div>
+<p class="note foot" id="foot"></p>
+<p class="note" id="priv"></p>
+<div id="rmenu" role="menu"></div>
+
+<dialog id="dSet">
+  <h2>⚙️ <span data-t="set"></span></h2>
+  <section><span class="h" data-t="theme"></span><div class="chips" id="themeSeg"></div></section>
+  <section><span class="h" data-t="meth"></span><div class="seg" id="accSeg"></div><div class="note" id="accExp" style="margin-top:6px"></div></section>
+  <section><span class="h" data-t="reg"></span><div class="seg" id="regSeg"></div><div class="note" style="margin-top:6px" data-t="regNote"></div></section>
+  <section><span class="h" data-t="reset"></span><button id="resetBtn" class="err" data-t="resetBtn"></button></section>
+  <div style="text-align:right"><button class="primary" data-close autofocus data-t="close"></button></div>
+</dialog>
+
+<dialog id="dFav">
+  <h2>⭐ <span data-t="fav"></span></h2>
+  <div id="favList"></div>
+  <p class="note" data-t="favNote"></p>
+  <div style="display:flex;justify-content:space-between"><button id="favCopy" data-t="copyAll"></button><button class="primary" data-close data-t="close"></button></div>
+</dialog>
+
+<dialog id="dBig">
+  <h2 data-t="bigT"></h2>
+  <p id="bigMsg"></p>
+  <div style="display:flex;justify-content:flex-end;gap:8px"><button data-close data-t="cancel"></button><button class="primary" id="bigGo" data-t="start"></button></div>
+</dialog>
+</div>
+</div></main>
+<footer><div class="wrap">
+<div><a data-i="impressum.html" href="impressum.html"><span class="de" lang="de">Impressum</span><span class="en" lang="en">Legal notice</span><span class="ru" lang="ru">Выходные данные</span></a>
+<a data-i="datenschutz.html" href="datenschutz.html"><span class="de" lang="de">Datenschutz</span><span class="en" lang="en">Privacy</span><span class="ru" lang="ru">Конфиденциальность</span></a>
+<a data-i="nutzungsbedingungen.html" href="nutzungsbedingungen.html"><span class="de" lang="de">Nutzungsbedingungen</span><span class="en" lang="en">Terms of use</span><span class="ru" lang="ru">Условия использования</span></a>
+<a data-i="hilfe.html" href="hilfe.html"><span class="de" lang="de">Hilfe</span><span class="en" lang="en">Help</span><span class="ru" lang="ru">Справка</span></a></div>
+<p>© 2026 Dmitry Korotkiy · <a href="https://dk-ai.de/" rel="noopener">DK-AI</a></p>
+</div></footer>
+<script src="site.js"></script>
+<script>
+
+"use strict";
+/* ---------- Texte: [en, de, es, ru] ---------- */
+const LANGS=["en","de","ru"];
+const T={
+lead:["Check whether domain names are available, right in your browser.","Prüfe, ob Domainnamen frei sind – direkt im Browser.","Проверьте, свободны ли доменные имена, прямо в браузере."],
+simple:["Simple","Einfach","Просто"],
+adv:["Advanced","Erweitert","Расширенно"],
+ask:["What should your project be called?","Wie soll dein Projekt heißen?","Как будет называться ваш проект?"],
+names:["Names (comma, space or line break)","Namen (Komma, Leerzeichen oder Zeilenumbruch)","Имена (запятая, пробел или перенос строки)"],
+hintEmpty:["Separate several names with a comma, space or line break. Umlauts are adjusted automatically.","Mehrere Namen mit Komma, Leerzeichen oder Zeilenumbruch trennen. Umlaute werden automatisch angepasst.","Несколько имён разделяйте запятой, пробелом или переносом строки. Умлауты исправляются автоматически."],
+will:["Will check: ","Wird geprüft als: ","Будет проверено: "],
+ext:["Extensions","Endungen","Зоны"],
+pop:["Popular","Beliebt","Популярные"],
+all:["All","Alle","Все"],
+pick:["Pick individually …","Einzeln wählen …","Выбрать по одной …"],
+less:["Less","Weniger","Меньше"],
+noext:["No extension selected.","Keine Endung gewählt.","Зона не выбрана."],
+custom:["Custom","Eigene","Свои"],
+m_keywords:["Prefix + names","Prefix + Namen","Префикс + имена"],
+m_short:["Short domains (1–4 characters)","Kurze Domains (1–4 Zeichen)","Короткие домены (1–4)"],
+m_expand:["Name + characters","Name + Zeichen","Имя + символы"],
+prefix:["Prefix","Prefix","Префикс"],
+hyphen:["Hyphen","Bindestrich","Дефис"],
+insert:["Insert","Einfügen","Вставить"],
+option:["Search option","Suchoption","Вариант поиска"],
+p0:["Prefix + name","Prefix + Name","Префикс + имя"],
+p1:["Name + prefix","Name + Prefix","Имя + префикс"],
+p2:["Combine names","Kombination","Комбинации"],
+len:["Length (characters)","Länge (Zeichen)","Длина (символы)"],
+chars:["Characters","Zeichen","Символы"],
+c0:["Letters (a–z)","Buchstaben (a–z)","Буквы (a–z)"],
+c1:["Digits (0–9)","Ziffern (0–9)","Цифры (0–9)"],
+c2:["Letters + digits","Beides","Буквы + цифры"],
+kw:["Name","Name","Имя"],
+extra:["Extra characters","Zusätzliche Zeichen","Доп. символы"],
+goes:["Extra characters go …","Zusätzliche Zeichen stehen …","Доп. символы стоят …"],
+ep0:["Before","Davor","Перед"],
+ep1:["After","Danach","После"],
+ep2:["Middle (both sides)","Mitte (beidseitig)","Внутри (с обеих сторон)"],
+e1:["Name: only a–z, 0–9 and hyphen allowed","Name: nur a–z, 0–9 und Bindestrich erlaubt","Имя: только a–z, 0–9 и дефис"],
+e2:["Name: no hyphen at start/end","Name: kein Bindestrich am Anfang/Ende","Имя: без дефиса в начале/конце"],
+check:["Check","Prüfen","Проверить"],
+stop:["Stop","Stopp","Стоп"],
+fav:["Favorites","Merkliste","Избранное"],
+copyFree:["Copy free","Freie kopieren","Копировать свободные"],
+theme:["Color scheme","Farbschema","Цветовая схема"],
+th_teal:["Teal","Türkis","Бирюзовый"],
+th_blue:["Light blue","Hellblau","Голубой"],
+th_white:["White","Weiß","Белый"],
+th_yellow:["Light yellow","Hellgelb","Светло-жёлтый"],
+th_pink:["Light pink","Hellrosa","Светло-розовый"],
+th_green:["Light green","Hellgrün","Светло-зелёный"],
+set:["Settings","Einstellungen","Настройки"],
+lang:["Language","Sprache","Язык"],
+meth:["Check method","Prüfmethode","Метод проверки"],
+a0:["Thorough (DNS + RDAP)","Gründlich (DNS + RDAP)","Точно (DNS + RDAP)"],
+a1:["Fast (NS query only)","Schnell (nur NS-Abfrage)","Быстро (только NS)"],
+x0:["NS query, plus an RDAP registry lookup on NXDOMAIN: also detects registered domains without DNS records. More reliable, but slower.","NS-Abfrage, bei NXDOMAIN zusätzlich RDAP-Registerabfrage: erkennt auch registrierte Domains ohne DNS-Eintrag. Verlässlicher, aber langsamer.","NS-запрос, при NXDOMAIN ещё RDAP-запрос к реестру: находит и домены без DNS-записей. Надёжнее, но медленнее."],
+x1:["One NS query per domain: NXDOMAIN = free, any other valid answer = taken. Very fast, but misses registered domains without DNS records.","Eine NS-Abfrage pro Domain: NXDOMAIN = frei, jede andere gültige Antwort = belegt. Sehr schnell, übersieht aber registrierte Domains ohne DNS-Eintrag.","Один NS-запрос на домен: NXDOMAIN = свободен, иначе занят. Очень быстро, но пропускает зарегистрированные домены без DNS-записей."],
+reg:["Registrar for “Buy”","Registrar für „Kaufen“","Регистратор для «Купить»"],
+regNote:["“Buy” opens the registrar’s search page with the domain. Price and availability are shown there.","„Kaufen“ öffnet die Suchseite des Registrars mit der Domain. Preis und Verfügbarkeit zeigt dort der Registrar.","«Купить» открывает страницу поиска регистратора. Цену и доступность покажет регистратор."],
+reset:["Reset","Zurücksetzen","Сброс"],
+resetBtn:["Reset everything …","Alles zurücksetzen …","Сбросить всё …"],
+resetAsk:["Delete all inputs and settings, including favorites, custom extensions and language? This cannot be undone.","Alle Eingaben und Einstellungen löschen, auch Merkliste, eigene Endungen und Sprache? Das lässt sich nicht rückgängig machen.","Удалить все данные и настройки, включая избранное, свои зоны и язык? Это нельзя отменить."],
+close:["Close","Schließen","Закрыть"],
+cancel:["Cancel","Abbrechen","Отмена"],
+start:["Start","Starten","Начать"],
+bigT:["Large run","Großer Lauf","Большой запуск"],
+big:[n=>`That is up to ${n} queries and may take a long time. Tip: try fewer lengths or extensions first.`,n=>`Das sind bis zu ${n} Abfragen. Das kann lange dauern. Tipp: erst weniger Längen oder Endungen prüfen.`,n=>`Это до ${n} запросов, возможно, придётся долго ждать. Совет: сначала проверьте меньше длин или зон.`],
+favEmpty:["Nothing here yet. Click ✅ in the results and choose “Add to favorites”.","Noch leer. Klicke in den Ergebnissen auf ✅ und wähle „Zur Merkliste hinzufügen“.","Пока пусто. Нажмите ✅ в результатах и выберите «В избранное»."],
+favNote:["Status is not re-checked here. Verify with the registrar before buying.","Der Status wird hier nicht erneut geprüft. Vor dem Kauf beim Registrar gegenprüfen.","Статус здесь повторно не проверяется. Перед покупкой проверьте у регистратора."],
+copyAll:["Copy all","Alle kopieren","Копировать все"],
+remove:["Remove","Entfernen","Убрать"],
+buy:[r=>`Buy at ${r}`,r=>`Bei ${r} kaufen`,r=>`Купить в ${r}`],
+buyS:["Buy","Kaufen","Купить"],
+whois:["Whois check","Whois-Gegenprüfung","Проверить в whois"],
+addFav:["Add to favorites","Zur Merkliste hinzufügen","В избранное"],
+remFav:["Remove from favorites","Aus Merkliste entfernen","Убрать из избранного"],
+copyD:["Copy domain","Domain kopieren","Копировать домен"],
+emptySimple:["Enter a name above and click “Check”.","Gib oben einen Namen ein und klicke auf „Prüfen“.","Введите имя выше и нажмите «Проверить»."],
+emptyAdv:["Pick a mode and search parameters, then click “Check”.","Wähle Modus und Suchparameter und klicke auf „Prüfen“.","Выберите режим и параметры и нажмите «Проверить»."],
+example:["Load example","Beispiel laden","Загрузить пример"],
+noRes:["No free results. Try other names or more extensions.","Keine freien Treffer. Probiere andere Namen oder mehr Endungen.","Свободных результатов нет. Попробуйте другие имена или больше зон."],
+foot:["Only names with at least one free result (✅, click for options) are listed. “·” = taken or unclear. ⭐ = on your favorites. ","Gelistet werden nur Namen mit mindestens einem freien Treffer (✅, Klick für Optionen). „·“ = belegt oder unklar. ⭐ = auf der Merkliste. ","Показаны только имена хотя бы с одним свободным результатом (✅, нажмите для вариантов). «·» = занято или неясно. ⭐ = в избранном. "],
+n0:["“Free” means: no DNS record and not registered according to RDAP. Even RDAP cannot reliably detect reserved, blocked or premium domains – verify with the registrar before buying.","„Frei“ heißt: kein DNS-Eintrag und laut RDAP nicht registriert. Reservierte, gesperrte oder Premium-Domains kann auch RDAP nicht sicher erkennen – vor dem Kauf beim Registrar gegenprüfen.","«Свободен» означает: нет DNS-записи и по данным RDAP не зарегистрирован. Зарезервированные, заблокированные и премиум-домены не определяет надёжно даже RDAP – проверьте у регистратора."],
+n1:["“Free” only means: no DNS record. Registered but unconfigured, reserved, blocked or premium domains may appear this way – verify with the registrar before buying.","„Frei“ heißt nur: kein DNS-Eintrag. Registrierte, aber nicht konfigurierte sowie reservierte, gesperrte oder Premium-Domains können so erscheinen – vor dem Kauf beim Registrar gegenprüfen.","«Свободен» означает лишь: нет DNS-записи. Так могут выглядеть зарегистрированные, но не настроенные, а также зарезервированные и премиум-домены – проверьте у регистратора."],
+priv:["No account, no tracking, no ads. The domain names you check are sent only to Cloudflare (DNS-over-HTTPS), IANA and the registry RDAP servers, straight from your browser.","Kein Konto, kein Tracking, keine Werbung. Die geprüften Domainnamen gehen direkt aus deinem Browser nur an Cloudflare (DNS-over-HTTPS), IANA und die RDAP-Server der Registries.","Без аккаунта, трекинга и рекламы. Проверяемые домены отправляются прямо из браузера только в Cloudflare (DNS-over-HTTPS), IANA и RDAP-серверы реестров."],
+stats:[(d,t,f,u)=>`Checked ${d} / ${t} · free ${f} · unclear ${u}`,(d,t,f,u)=>`Geprüft ${d} / ${t} · frei ${f} · unklar ${u}`,(d,t,f,u)=>`Проверено ${d} / ${t} · свободно ${f} · неясно ${u}`],
+qps:["queries/s","Abfragen/s","запросов/с"],
+left:["remaining ≈","Restzeit ≈","осталось ≈"],
+under2:["under 2 s","unter 2 s","менее 2 с"],
+cnt:[(a,b,c,d)=>`${a} → up to ${b} domain names × ${c} extensions = ${d} queries`,(a,b,c,d)=>`${a} → bis zu ${b} Domainnamen × ${c} Endungen = ${d} Abfragen`,(a,b,c,d)=>`${a} → до ${b} доменных имён × ${c} зон = ${d} запросов`],
+cnt2:[(b,c,d)=>`${b} names × ${c} extensions = ${d} queries`,(b,c,d)=>`${b} Namen × ${c} Endungen = ${d} Abfragen`,(b,c,d)=>`${b} имён × ${c} зон = ${d} запросов`],
+cnt3:["Middle needs at least 2 extra characters (one per side).","„Mitte“ braucht mindestens 2 zusätzliche Zeichen (je eins pro Seite).","Для «Внутри» нужно минимум 2 доп. символа (по одному с каждой стороны)."],
+e3:["Name is too long","Name ist zu lang","Имя слишком длинное"],
+comb:["All names are combined pairwise.","Alle Namen werden paarweise kombiniert.","Все имена комбинируются попарно."],
+shown:[(s,a)=>`Display limited to the first ${s} of ${a} rows. “Copy free” includes all results.`,(s,a)=>`Anzeige begrenzt auf die ersten ${s} von ${a} Zeilen. „Freie kopieren“ enthält alle Treffer.`,(s,a)=>`Показаны первые ${s} из ${a} строк. «Копировать свободные» включает все результаты.`],
+copied:["Copied","Kopiert","Скопировано"],
+};
+
+/* ---------- Zustand (localStorage) ---------- */
+const DEF={theme:"white",lvl:"simple",mode:"keywords",acc:"fast",reg:"namecheap",fav:[],tlds:["com","de","net","org","es","ru","tech","io","app","ai","dev","cc"],
+ cust:Array(8).fill(""),custOn:Array(8).fill(false),prefix:"dk",hyph:true,pos:0,kw:"",sLen:[1,2,3],sSet:0,eKw:"",eLen:[1,2],eSet:0,ePos:[0,1]};
+let S;try{S={...DEF,...JSON.parse(localStorage.getItem("dc")||"{}")}}catch(e){S={...DEF}}
+const save=()=>{try{localStorage.setItem("dc",JSON.stringify(S))}catch(e){}};
+const ALL=DEF.tlds,PRESETS={pop:["com","de","net"],tech:["io","ai","dev","app","tech"],all:ALL};
+const REGS={namecheap:["Namecheap",d=>`https://www.namecheap.com/domains/registration/results/?domain=${d}`],porkbun:["Porkbun",d=>`https://porkbun.com/checkout/search?q=${d}`],godaddy:["GoDaddy",d=>`https://www.godaddy.com/domainsearch/find?domainToCheck=${d}`]};
+const $=s=>document.querySelector(s),L=()=>LANGS.indexOf(S.lang);
+const syncLang=()=>{const l=document.documentElement.getAttribute("data-lang");S.lang=LANGS.includes(l)?l:"en"};syncLang();
+const t=(k,...a)=>{const v=T[k][L()];return typeof v==="function"?v(...a):v};
+const fmt=n=>n.toLocaleString(S.lang);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+/* ---------- Logik (1:1 aus der App) ---------- */
+const OKCH=/^[a-z0-9-]+$/;
+function cleanLabel(raw){let s=raw.trim().toLowerCase();const i=s.indexOf(".");if(i>=0)s=s.slice(0,i);
+ s=s.replace(/ä/g,"ae").replace(/ö/g,"oe").replace(/ü/g,"ue").replace(/ß/g,"ss").replace(/[^a-z0-9-]/g,"").replace(/^-+|-+$/g,"");
+ return s&&s.length<=63?s:null}
+function cleanTLD(s){let x=s.trim().toLowerCase().replace(/^\.+/,"");return x.length>=2&&x.length<=63&&OKCH.test(x)&&!x.startsWith("-")&&!x.endsWith("-")?x:null}
+const activeTLDs=()=>{const o=ALL.filter(x=>S.tlds.includes(x));S.cust.forEach((r,i)=>{const c=cleanTLD(r);if(S.custOn[i]&&c&&!o.includes(c))o.push(c)});return o};
+const keywordList=()=>{const seen=new Set(),o=[];for(const r of S.kw.split(/[,;\n\t ]+/)){const k=cleanLabel(r);if(k&&!seen.has(k)){seen.add(k);o.push(k)}}return o};
+const CH=c=>[..."abcdefghijklmnopqrstuvwxyz"].slice(0,c==1?0:26).concat(c==1||c==2?[..."0123456789"]:[]);
+const ipow=(b,e)=>{let r=1;while(e-->0)r*=b;return r};
+const shortCount=(ch,lens)=>lens.reduce((a,l)=>a+ipow(ch.length,l),0);
+function shortAt(ch,lens,i){for(const len of [...lens].sort()){const blk=ipow(ch.length,len);if(i<blk){const o=Array(len);for(let p=len-1;p>=0;p--){o[p]=ch[i%ch.length];i=Math.floor(i/ch.length)}return o.join("")}i-=blk}return""}
+function buildLabels(){const kws=keywordList(),j=S.hyph?"-":"",seen=new Set(),o=[];const add=s=>{if(!seen.has(s)){seen.add(s);o.push(s)}};
+ if(S.pos==2){for(const a of kws)for(const b of kws)if(a!==b)add(a+j+b);return o}
+ const p=S.prefix.trim().toLowerCase().replace(/^-+|-+$/g,"");
+ for(const k of kws)add(!p?k:S.pos==0?p+j+k:k+j+p);return o}
+const eKwClean=()=>S.eKw.trim().toLowerCase();
+function eKwErr(){const k=eKwClean();if(!k)return null;if(!OKCH.test(k))return t("e1");if(k.startsWith("-")||k.endsWith("-"))return t("e2");if(k.length+3>63)return t("e3");return null}
+function expandCount(){const c=CH(S.eSet).length;let n=0;for(const l of S.eLen){const b=ipow(c,l);if(S.ePos.includes(0))n+=b;if(S.ePos.includes(1))n+=b;if(S.ePos.includes(2)&&l>=2)n+=(l-1)*b}return n}
+function buildExpand(){const kw=eKwClean();if(!kw||eKwErr())return[];const ch=CH(S.eSet),seen=new Set(),o=[];const add=s=>{if(!seen.has(s)){seen.add(s);o.push(s)}};
+ for(const n of [...S.eLen].sort()){const g=i=>shortAt(ch,[n],i),c=ipow(ch.length,n);
+  if(S.ePos.includes(0))for(let i=0;i<c;i++)add(g(i)+kw);
+  if(S.ePos.includes(1))for(let i=0;i<c;i++)add(kw+g(i));
+  if(S.ePos.includes(2)&&n>=2)for(let k=1;k<n;k++){const lc=ipow(ch.length,k),rc=ipow(ch.length,n-k);for(let i=0;i<lc;i++){const l=shortAt(ch,[k],i);for(let j=0;j<rc;j++)add(l+kw+shortAt(ch,[n-k],j))}}}
+ return o}
+const simple=()=>S.lvl=="simple";
+function queryCount(){const e=activeTLDs().length;if(simple())return keywordList().length*e;
+ if(S.mode=="keywords"){const n=keywordList().length;return(S.pos==2?n*(n-1):n)*e}
+ if(S.mode=="short")return shortCount(CH(S.sSet),S.sLen)*e;return expandCount()*e}
+function canStart(){if(!activeTLDs().length)return false;if(simple())return keywordList().length>0;
+ if(S.mode=="short"&&!S.sLen.length)return false;
+ if(S.mode=="expand"&&(!eKwClean()||eKwErr()||!S.eLen.length||!S.ePos.length))return false;return true}
+
+/* ---------- DNS / RDAP (Cloudflare DoH, IANA-Bootstrap) ---------- */
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+let ctl={stop:false};
+const validate=l=>!l?"empty":l.length>63||/^-|-$/.test(l)||!OKCH.test(l)?"invalid":null;
+async function doh(domain){const r=await fetch(`https://cloudflare-dns.com/dns-query?name=${encodeURIComponent(domain)}&type=NS`,{headers:{accept:"application/dns-json"},signal:AbortSignal.timeout(8000)});return(await r.json()).Status}
+async function checkFast(domain){for(let a=0;a<3;a++){if(ctl.stop)return"unclear";try{const s=await doh(domain);if(s===3)return"free";if(s===0)return"taken"}catch(e){}if(a<2)await sleep(400*(a+1))}return"unclear"}
+let rdapMap=null;
+async function rdapBase(tld){if(!rdapMap){try{const j=await(await fetch("https://data.iana.org/rdap/dns.json")).json(),m={};for(const[tl,urls]of j.services){const b=urls.find(u=>u.startsWith("https://"))||urls[0];for(const x of tl)m[x.toLowerCase()]=b}rdapMap=m}catch(e){return null}}return rdapMap[tld]}
+async function rdap(domain,tld){const b=await rdapBase(tld);if(!b)return"unclear";const url=(b.endsWith("/")?b:b+"/")+"domain/"+domain;
+ for(let a=0;a<4;a++){if(ctl.stop)return"unclear";try{const r=await fetch(url,{headers:{accept:"application/rdap+json"},signal:AbortSignal.timeout(10000)});if(r.status===404)return"free";if(r.status===200)return"taken"}catch(e){}if(a<3)await sleep(800*(a+1))}return"unclear"}
+async function check(label,tld){if(validate(label))return"unclear";const d=label+"."+tld,r=await checkFast(d);return r==="free"&&S.acc==="thorough"?rdap(d,tld):r}
+
+/* ---------- Lauf ---------- */
+let run={rows:new Map(),runTLDs:[],total:0,done:0,free:0,unclear:0,t0:0,running:false};
+const rate=()=>parseFloat(localStorage.getItem("rate_"+S.acc))||(S.acc=="fast"?40:10);
+function startPressed(){if(run.running||!canStart())return;if(queryCount()>20000){$("#bigMsg").textContent=t("big",fmt(queryCount()));$("#dBig").showModal()}else start()}
+async function start(){
+ let src,count;
+ if(simple()||S.mode=="keywords"){const l=simple()?keywordList():buildLabels();src=i=>l[i];count=l.length}
+ else if(S.mode=="short"){const ch=CH(S.sSet);count=shortCount(ch,S.sLen);src=i=>shortAt(ch,S.sLen,i)}
+ else{const l=buildExpand();src=i=>l[i];count=l.length}
+ const tlds=activeTLDs();if(!tlds.length||!count)return;
+ const acc=S.acc;ctl={stop:false};
+ run={rows:new Map(),runTLDs:tlds,total:count*tlds.length,done:0,free:0,unclear:0,t0:performance.now(),running:true};
+ ui();draw();
+ let next=0,last=0,tmr=0;const conc=acc=="fast"?24:12;
+ const worker=async()=>{while(!ctl.stop&&next<run.total){const k=next++,label=src(Math.floor(k/tlds.length)),tld=tlds[k%tlds.length],st=await check(label,tld);
+  if(ctl.stop)return;run.done++;
+  if(st==="free"){run.free++;(run.rows.get(label)||run.rows.set(label,new Set()).get(label)).add(tld)}else if(st==="unclear")run.unclear++;
+  const n=performance.now();if(run.done>=run.total){last=n}else if(n-last>300){last=n;draw()}else if(!tmr){tmr=setTimeout(()=>{tmr=0;if(run.running){last=performance.now();draw()}},300-(n-last))}}};
+ await Promise.all(Array.from({length:conc},worker));clearTimeout(tmr);tmr=0;
+ const el=(performance.now()-run.t0)/1000;
+ if(!ctl.stop&&run.done>=50&&el>2)try{localStorage.setItem("rate_"+acc,run.done/el)}catch(e){}
+ run.running=false;ui();draw()}
+function stop(){ctl.stop=true;run.running=false;ui();draw()}
+const freeDomains=()=>{const o=[];for(const[l,s]of run.rows)for(const x of run.runTLDs)if(s.has(x))o.push(l+"."+x);return o.sort()};
+
+/* ---------- Aktionen ---------- */
+const copy=async s=>{try{await navigator.clipboard.writeText(s)}catch(e){const a=document.createElement("textarea");a.value=s;document.body.appendChild(a);a.select();document.execCommand("copy");a.remove()}};
+const whois=d=>window.open(d.endsWith(".de")?`https://www.denic.de/service/whois-service/?domain=${d}`:`https://www.whois.com/whois/${d}`,"_blank","noopener");
+const buy=d=>window.open(REGS[S.reg][1](encodeURIComponent(d)),"_blank","noopener");
+const isFav=d=>S.fav.includes(d);
+function toggleFav(d){S.fav=isFav(d)?S.fav.filter(x=>x!==d):[...S.fav,d];save();ui();draw()}
+function openMenu(btn,d){const m=$("#rmenu"),rn=REGS[S.reg][0],f=isFav(d);
+ m.innerHTML=`<div class="d">${esc(d)}</div>`;
+ [[t("whois"),()=>whois(d)],[t("buy",rn),()=>buy(d)],[f?t("remFav"):t("addFav"),()=>toggleFav(d)],[t("copyD"),()=>copy(d)]].forEach(([txt,fn])=>{const b=document.createElement("button");b.textContent=txt;b.onclick=()=>{m.style.display="none";fn()};m.appendChild(b)});
+ m.style.display="block";const r=btn.getBoundingClientRect();m.style.left=Math.max(8,Math.min(r.left,innerWidth-m.offsetWidth-8))+"px";m.style.top=Math.min(r.bottom+4,innerHeight-m.offsetHeight-8)+"px"}
+document.addEventListener("click",e=>{if(!e.target.closest("#rmenu")&&!e.target.closest("button.free"))$("#rmenu").style.display="none"});
+
+/* ---------- Oberfläche ---------- */
+function seg(el,opts,cur,on){el.innerHTML="";opts.forEach(([v,txt])=>{const b=document.createElement("button");b.textContent=txt;if(v===cur)b.className="on";b.disabled=run.running&&el.dataset.lock!=="0";b.onclick=()=>on(v);el.appendChild(b)})}
+function checks(el,vals,cur,on,lab){el.innerHTML="";vals.forEach(v=>{const l=document.createElement("label");l.className="cb";const i=document.createElement("input");i.type="checkbox";i.checked=cur.includes(v);i.disabled=run.running;i.onchange=()=>on(v,i.checked);l.append(i,document.createTextNode(lab?lab(v):v));el.appendChild(l)})}
+const set=(k,v)=>{S[k]=v;save();ui()};
+const toggleIn=(k,v,on)=>{S[k]=on?[...new Set([...S[k],v])]:S[k].filter(x=>x!==v);save();ui()};
+function ui(){
+ $("#tool").dataset.theme=S.theme;
+ const ts=$("#themeSeg");ts.innerHTML="";for(const k of["white","teal","blue","yellow","pink","green"]){const b=document.createElement("button");b.className="chip"+(S.theme===k?" on":"");b.textContent=t("th_"+k);b.dataset.th=k;b.onclick=()=>set("theme",k);ts.appendChild(b)}
+ document.querySelectorAll("[data-t]").forEach(e=>e.textContent=t(e.dataset.t));
+ const busy=run.running;
+ seg($("#lvl"),[["simple",t("simple")],["advanced",t("adv")]],S.lvl,v=>set("lvl",v));
+ $("#favBtn").textContent="⭐ "+t("fav")+(S.fav.length?` (${S.fav.length})`:"");
+ $("#simpleBox").classList.toggle("hide",!simple());$("#advBox").classList.toggle("hide",simple());
+ for(const id of["kwS","kwA"]){const e=$("#"+id);if(e!==document.activeElement)e.value=S.kw;e.disabled=busy}
+ const kl=keywordList();$("#hint").textContent=kl.length?t("will")+kl.slice(0,8).join(", ")+(kl.length>8?" …":""):t("hintEmpty");
+ /* Endungen */
+ const pr=$("#presets");pr.innerHTML="";for(const[k,v]of Object.entries(PRESETS)){const b=document.createElement("button");b.className="chip"+(S.tlds.length==v.length&&v.every(x=>S.tlds.includes(x))?" on":"");b.textContent=k=="tech"?"Tech":t(k);b.title=v.map(x=>"."+x).join(" ");b.disabled=busy;b.onclick=()=>set("tlds",[...v]);pr.appendChild(b)}
+ const a=activeTLDs(),sm=$("#tldSum");sm.textContent=a.length?a.map(x=>"."+x).join("  "):t("noext");sm.className="note"+(a.length?"":" err");
+ const open=!$("#tldDetail").classList.contains("hide");$("#tldMore").textContent=open?t("less"):t("pick");$("#tldMore").disabled=busy;sm.classList.toggle("hide",open);
+ checks($("#tldGrid"),ALL,S.tlds,(v,on)=>{S.tlds=on?[...S.tlds,v]:S.tlds.filter(x=>x!==v);save();ui()},v=>"."+v);
+ const cg=$("#custGrid");cg.innerHTML="";S.cust.forEach((txt,i)=>{const w=document.createElement("span");w.className="cust";const c=document.createElement("input");c.type="checkbox";c.checked=S.custOn[i];c.disabled=busy||!cleanTLD(txt);c.onchange=()=>{S.custOn[i]=c.checked;save();ui()};
+  const x=document.createElement("input");x.type="text";x.placeholder=".xyz";x.value=txt;x.disabled=busy;x.className=txt.trim().length>=2&&!cleanTLD(txt)?"bad":"";
+  x.oninput=()=>{const was=!!cleanTLD(S.cust[i]),is=!!cleanTLD(x.value);S.cust[i]=x.value;if(!is)S.custOn[i]=false;else if(!was)S.custOn[i]=true;save();ui();const n=$("#custGrid").children[i].querySelector("input[type=text]");n.focus();n.setSelectionRange(n.value.length,n.value.length)};
+  x.onchange=()=>ui();w.append(c,x);cg.appendChild(w)});
+ /* Erweitert */
+ seg($("#tabs"),["keywords","short","expand"].map(m=>[m,t("m_"+m)]),S.mode,v=>set("mode",v));$("#tabs").className="tabs";$("#tabs").style.opacity=busy?.5:1;{const tb=$("#tabs"),o=tb.querySelector(".on");if(o&&(o.offsetLeft<tb.scrollLeft||o.offsetLeft+o.offsetWidth>tb.scrollLeft+tb.clientWidth))tb.scrollLeft=Math.max(0,o.offsetLeft-12)}
+ for(const m of["keywords","short","expand"])$("#m_"+m).classList.toggle("hide",S.mode!==m);
+ $("#prefix").value!==S.prefix&&($("#prefix").value=S.prefix);$("#prefix").disabled=busy||S.pos==2;$("#hyph").checked=S.hyph;$("#hyph").disabled=busy;
+ seg($("#pos"),[0,1,2].map(i=>[i,t("p"+i)]),S.pos,v=>set("pos",v));
+ checks($("#sLen"),[1,2,3,4],S.sLen,(v,on)=>toggleIn("sLen",v,on));
+ seg($("#sSet"),[0,1,2].map(i=>[i,t("c"+i)]),S.sSet,v=>set("sSet",v));
+ $("#eKw").value!==S.eKw&&($("#eKw").value=S.eKw);$("#eKw").disabled=busy;
+ checks($("#eLen"),[1,2,3],S.eLen,(v,on)=>toggleIn("eLen",v,on));
+ seg($("#eSet"),[0,1,2].map(i=>[i,t("c"+i)]),S.eSet,v=>set("eSet",v));
+ checks($("#ePos"),[0,1,2],S.ePos,(v,on)=>toggleIn("ePos",v,on),v=>t("ep"+v));
+ /* Zähler */
+ const q=queryCount(),e=a.length,c=$("#count");let txt="";
+ if(S.mode=="keywords"){const n=kl.length;txt=(S.pos==2?t("comb")+" ":"")+t("cnt",fmt(n),fmt(S.pos==2?n*(n-1):n),e,fmt(q))}
+ else if(S.mode=="short")txt=t("cnt2",fmt(shortCount(CH(S.sSet),S.sLen)),e,fmt(q));
+ else txt=t("cnt2",fmt(expandCount()),e,fmt(q))+" "+t("cnt3")+(eKwErr()?" ⚠ "+eKwErr():"");
+ c.textContent=txt;c.className="note "+(q>500000?"err":q>20000?"warn":"");
+ /* Steuerung */
+ $("#go").textContent=t("check");$("#go").disabled=!canStart();$("#go").classList.toggle("hide",busy);
+ $("#stop").classList.toggle("hide",!busy);$("#stop").textContent=t("stop");
+ const qc=queryCount(),est=qc/rate();$("#est").textContent=!busy&&qc?(est<2?t("under2"):"≈ "+dur(est))+" · "+t(S.acc=="fast"?"a1":"a0"):"";
+ $("#copyFree").disabled=!run.rows.size;
+ $("#foot").textContent=t("foot")+t(S.acc=="fast"?"n1":"n0");$("#priv").textContent=t("priv");
+ /* Einstellungen */
+ seg($("#accSeg"),[["thorough",t("a0")],["fast",t("a1")]],S.acc,v=>set("acc",v));$("#accExp").textContent=t(S.acc=="fast"?"x1":"x0");
+ seg($("#regSeg"),Object.entries(REGS).map(([k,v])=>[k,v[0]]),S.reg,v=>set("reg",v));$("#regSeg").dataset.lock="0";
+ favList();
+}
+function dur(s){s=Math.floor(s);const u=S.lang=="ru"?["с","мин","ч"]:["s","min","h"];return s<60?`${s} ${u[0]}`:s<3600?`${Math.floor(s/60)} ${u[1]}`:`${Math.floor(s/3600)} ${u[2]} ${String(Math.floor(s%3600/60)).padStart(2,"0")} ${u[1]}`}
+function favList(){const f=$("#favList");f.innerHTML="";if(!S.fav.length){f.innerHTML=`<p class="note">${esc(t("favEmpty"))}</p>`}
+ S.fav.forEach(d=>{const r=document.createElement("div");r.className="favrow";r.innerHTML=`<code>${esc(d)}</code>`;
+  [[t("buyS"),()=>buy(d)],["Whois",()=>whois(d)],["🗑",()=>{S.fav=S.fav.filter(x=>x!==d);save();ui();draw()}]].forEach(([x,fn])=>{const b=document.createElement("button");b.textContent=x;b.onclick=fn;r.appendChild(b)});f.appendChild(r)});
+ $("#favCopy").disabled=!S.fav.length}
+function draw(){
+ const bar=$("#bar");bar.classList.toggle("hide",!run.total);bar.max=Math.max(run.total,1);bar.value=run.done;
+ let s="";if(run.total){s=t("stats",fmt(run.done),fmt(run.total),fmt(run.free),fmt(run.unclear));const el=(performance.now()-run.t0)/1000;
+  if(el>1&&run.done>0&&(run.running||run.done)){const r=run.done/el;s+=` · ${r.toFixed(0)} ${t("qps")}`;if(run.running&&r>0)s+=` · ${t("left")} ${dur((run.total-run.done)/r)}`}}
+ $("#stats").textContent=s;$("#copyFree").disabled=!run.rows.size;
+ const tb=$("#tbl");
+ if(!run.total){tb.innerHTML=`<div class="empty"><b>🔍</b>${esc(t(simple()?"emptySimple":"emptyAdv"))}${simple()?`<br><br><button id="ex">${esc(t("example"))}</button>`:""}</div>`;const ex=$("#ex");if(ex)ex.onclick=()=>set("kw","sonnenhof, nordwind, blauwerk");return}
+ const rows=[...run.rows].slice(0,1000);
+ let h=`<table><thead><tr><th>Domain</th>${run.runTLDs.map(x=>`<th>.${esc(x)}</th>`).join("")}</tr></thead><tbody>`;
+ for(const[l,fs]of rows)h+=`<tr><td>${esc(l)}</td>${run.runTLDs.map(x=>fs.has(x)?`<td><button class="free" data-d="${esc(l+"."+x)}" title="${esc(l+"."+x)}">${isFav(l+"."+x)?"⭐":"✅"}</button></td>`:`<td><span class="no">·</span></td>`).join("")}</tr>`;
+ h+="</tbody></table>";
+ if(run.rows.size>1000)h+=`<p class="note" style="padding:8px 12px">${esc(t("shown",fmt(1000),fmt(run.rows.size)))}</p>`;
+ if(!run.running&&!run.rows.size)h+=`<div class="empty">${esc(t("noRes"))}</div>`;
+ tb.innerHTML=h}
+$("#tbl").addEventListener("click",e=>{const b=e.target.closest("button.free");if(b)openMenu(b,b.dataset.d)});
+
+/* ---------- Ereignisse ---------- */
+$("#kwS").oninput=e=>{S.kw=e.target.value;save();ui()};
+$("#kwA").oninput=e=>{S.kw=e.target.value;save();ui()};
+for(const id of["kwS","kwA"])$("#"+id).addEventListener("keydown",e=>{if(e.key==="Enter"&&(e.metaKey||e.ctrlKey)){e.preventDefault();startPressed()}});
+$("#prefix").oninput=e=>{S.prefix=e.target.value;save();ui()};
+$("#hyph").onchange=e=>set("hyph",e.target.checked);
+$("#eKw").oninput=e=>{S.eKw=e.target.value;save();ui()};
+$("#tldMore").onclick=()=>{$("#tldDetail").classList.toggle("hide");ui()};
+$("#go").onclick=startPressed;$("#stop").onclick=stop;
+$("#copyFree").onclick=()=>copy(freeDomains().join("\n"));
+$("#favBtn").onclick=()=>{ui();$("#dFav").showModal()};
+$("#favCopy").onclick=()=>copy(S.fav.join("\n"));
+$("#setBtn").onclick=()=>$("#dSet").showModal();
+$("#bigGo").onclick=()=>{$("#dBig").close();start()};
+$("#resetBtn").onclick=()=>{if(confirm(t("resetAsk"))){try{localStorage.clear()}catch(e){}location.reload()}};
+document.querySelectorAll("[data-close]").forEach(b=>b.onclick=()=>b.closest("dialog").close());
+document.querySelectorAll("dialog").forEach(d=>d.addEventListener("click",e=>{if(e.target===d)d.close()}));
+document.addEventListener("keydown",e=>{if((e.metaKey||e.ctrlKey)&&e.key==="Enter"&&!run.running){e.preventDefault();startPressed()}});
+new MutationObserver(()=>{syncLang();ui();draw()}).observe(document.documentElement,{attributes:true,attributeFilter:["data-lang"]});
+ui();draw();
+
+</script>
+</body>
+</html>

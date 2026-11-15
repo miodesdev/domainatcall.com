@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="98 98 828 828" width="1024" height="1024">
+  <defs>
+    <style>
+      :root{--l0:#2B6DFB;--l1:#1637E8;--l2:#0304D2;--b0:#C4D5FF;--b1:#2F63F5;--b2:#0304D2;--g:#2970FE;--go:.45}
+      @media (prefers-color-scheme: dark){:root{--l0:#FFFFFF;--l1:#EEF3FF;--l2:#DCE7FF;--b0:#FFFFFF;--b1:#7FA6FF;--b2:#2970FE;--g:#2970FE;--go:.95}}
+      .l0{stop-color:var(--l0)}.l1{stop-color:var(--l1)}.l2{stop-color:var(--l2)}.b0{stop-color:var(--b0)}.b1{stop-color:var(--b1)}.b2{stop-color:var(--b2)}
+    </style>
+    <linearGradient id="line" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="710"><stop class="l0" offset="0"/><stop class="l1" offset="0.55"/><stop class="l2" offset="1"/></linearGradient>
+    <radialGradient id="ball" cx="0.35" cy="0.3" r="0.8"><stop class="b0" offset="0"/><stop class="b1" offset="0.5"/><stop class="b2" offset="1"/></radialGradient>
+    <filter id="ls" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#00035E" flood-opacity="0.22"/></filter>
+    <filter id="glow" x="-150%" y="-150%" width="400%" height="400%"><feGaussianBlur stdDeviation="22"/></filter>
+  </defs>
+  <g transform="translate(188.6 142.8) scale(1.04)">
+    <g fill="none" stroke="url(#line)" stroke-linecap="round" stroke-linejoin="round" filter="url(#ls)">
+      <path d="M16.8,218.5Q17.0,184.5 46.4,167.4L279.1,32.6Q308.5,15.5 337.9,32.5L578.6,172.0Q608.0,189.0 607.8,223.0L606.2,493.0Q606.0,527.0 576.6,544.0L344.4,678.5Q315.0,695.5 285.6,678.5L44.4,539.0Q15.0,522.0 15.2,488.0Z" stroke-width="62"/>
+      <path d="M93,232 L221.7,305.8 M529,232 L400.3,305.8 M311,460 L311,600" stroke-width="54"/>
+    </g>
+    <circle cx="311" cy="357" r="66" style="fill:var(--g);opacity:var(--go)" filter="url(#glow)"/>
+    <circle cx="311" cy="357" r="58" fill="url(#ball)" stroke="#0A1FD8" stroke-opacity="0.6" stroke-width="3"/>
+    <ellipse cx="293.6" cy="335" rx="22" ry="15.1" fill="#fff" opacity="0.7"/>
+  </g>
+</svg>
