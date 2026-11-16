@@ -106,9 +106,14 @@
 #tool .cb{min-height:var(--ch)}
 #tool #sLen,#tool #eLen,#tool #ePos{display:flex;flex-wrap:wrap;align-items:center}
 #tool .ctl button,#tool .bar>button{height:var(--ch);display:inline-flex;align-items:center;justify-content:center;padding-top:0;padding-bottom:0}
-.titlerow{display:flex;align-items:center;justify-content:space-between;gap:12px 20px;flex-wrap:wrap;margin:0 0 .6em}
-.titlerow h1{margin:0;font-size:24px;line-height:1.3}
-.donate{display:inline-flex;align-items:center;gap:8px;background:#ffa800;color:#2b1a00!important;font-weight:700;font-size:16px;line-height:1;padding:12px 22px;border-radius:10px;text-decoration:none!important;box-shadow:0 2px 8px rgba(255,168,0,.45);transition:background .15s,transform .15s}
+.titlerow{display:flex;align-items:flex-start;justify-content:space-between;gap:12px 24px;flex-wrap:wrap;margin:0 0 1em}
+.titlerow .intro{flex:0 1 auto;width:max-content;max-width:100%;min-width:0}
+.titlerow h1{margin:0;font-size:17px;line-height:1.3}
+.titlerow .intro p{margin:5px 0 0;font-size:15px;line-height:1.45;color:var(--muted);width:0;min-width:100%}
+.titlerow .intro p.free{font-size:14px}
+#tool .coffee{hyphens:manual;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px 16px;margin:14px 0 6px;padding:12px 16px;text-align:center;font-size:16px;font-weight:600;color:inherit;background:rgba(255,168,0,.12);border:1px solid rgba(255,168,0,.5);border-radius:12px}
+#tool .coffee .donate{font-size:15px;padding:10px 18px}
+.donate{white-space:nowrap;flex:none;display:inline-flex;align-items:center;gap:8px;background:#ffa800;color:#2b1a00!important;font-weight:700;font-size:16px;line-height:1;padding:12px 22px;border-radius:10px;text-decoration:none!important;box-shadow:0 2px 8px rgba(255,168,0,.45);transition:background .15s,transform .15s}
 .donate:hover{background:#ff9100;transform:translateY(-1px)}
 .donate:focus-visible{outline:3px solid #ff9100;outline-offset:3px}
 .donate .de,.donate .en,.donate .ru{color:inherit}
@@ -192,8 +197,12 @@
 </div></header>
 <main><div class="wrap">
 <div class="titlerow">
+<div class="intro">
 <h1 data-t="lead"></h1>
-<a class="donate" href="https://stripe.com/@dkai" target="_blank" rel="noopener">☕ <span class="de" lang="de">Kaffee spendieren</span><span class="en" lang="en">Buy me a coffee</span><span class="ru" lang="ru">Угостить кофе</span></a>
+<p class="adv" data-t="leadAdv"></p>
+<p class="free" data-t="leadFree"></p>
+</div>
+<a class="donate" href="https://stripe.com/@dkai" target="_blank" rel="noopener" data-t="donate"></a>
 </div>
 <div id="tool" data-theme="white">
 <div class="bar">
@@ -261,6 +270,7 @@
 <progress id="bar" class="hide" value="0" max="1"></progress>
 <div class="note" id="stats" style="margin:4px 0 8px"></div>
 <div class="tbl" id="tbl"></div>
+<p class="note coffee hide" id="coffee"><span data-t="coffeeA"></span><a class="donate" href="https://stripe.com/@dkai" target="_blank" rel="noopener" data-t="coffeeB"></a></p>
 <p class="note foot" id="foot"></p>
 <p class="note" id="priv"></p>
 <div id="rmenu" role="menu"></div>
@@ -302,7 +312,12 @@
 /* ---------- Texte: [en, de, es, ru] ---------- */
 const LANGS=["en","de","ru"];
 const T={
-lead:["Check domain names in your browser.","Domainnamen im Browser prüfen.","Проверка доменных имён в браузере."],
+lead:["Professional domain availability checker, right in your browser.","Professionelle Domain-Verfügbarkeitsprüfung, direkt im Browser.","Профессиональная проверка доступности доменов прямо в браузере."],
+leadAdv:["Try Advanced mode for bulk name ideas: prefix + name combinations, short domains, name + characters.","Im Modus „Erweitert“ prüfst du viele Namensideen auf einmal: Präfix + Name, kurze Domains, Name + Zeichen.","Попробуйте режим «Расширенно» для множества идей имён: префикс + имя, короткие домены, имя + символы."],
+leadFree:["Free, no account, no tracking, no ads.","Kostenlos, ohne Konto, ohne Tracking, ohne Werbung.","Бесплатно, без аккаунта, без отслеживания, без рекламы."],
+donate:["Support this free tool","Dieses kostenlose Tool unterstützen","Поддержать проект"],
+coffeeA:["Like it? Keep it free and ad-free: ","Gefällt dir das Tool? Halte es kostenlos und werbefrei: ","Нравится? Пусть остаётся бесплатным и без рекламы: "],
+coffeeB:["buy me a coffee ☕","spendier mir einen Kaffee ☕","угости меня кофе ☕"],
 simple:["Simple","Einfach","Просто"],
 adv:["Advanced","Erweitert","Расширенно"],
 ask:["What should your project be called?","Wie soll dein Projekt heißen?","Как будет называться ваш проект?"],
@@ -555,6 +570,7 @@ function draw(){
  let s="";if(run.total){s=t("stats",fmt(run.done),fmt(run.total),fmt(run.free),fmt(run.unclear));const el=(performance.now()-run.t0)/1000;
   if(el>1&&run.done>0&&(run.running||run.done)){const r=run.done/el;s+=` · ${r.toFixed(0)} ${t("qps")}`;if(run.running&&r>0)s+=` · ${t("left")} ${dur((run.total-run.done)/r)}`}}
  $("#stats").textContent=s;$("#copyFree").disabled=!run.rows.size;
+ $("#coffee").classList.toggle("hide",run.running||!run.free);
  const tb=$("#tbl");
  if(!run.total){tb.innerHTML=`<div class="empty"><b>🔍</b>${esc(t(simple()?"emptySimple":"emptyAdv"))}${simple()?`<br><br><button id="ex">${esc(t("example"))}</button>`:""}</div>`;const ex=$("#ex");if(ex)ex.onclick=()=>set("kw","sonnenhof, nordwind, blauwerk");return}
  const rows=[...run.rows].slice(0,1000);
