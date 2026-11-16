@@ -481,7 +481,7 @@ function rdapDone(b,throttled,retryAfter){const h=hostState(b);h.active--;
  if(throttled){h.gap=Math.min(h.gap*2,3000);h.pause=Date.now()+Math.min(Math.max(retryAfter||0,h.gap*2),30000)}
  else h.gap=Math.max(150,h.gap*.9)}
 /* DENIC sendet keine CORS-Header: .de ist im Browser nicht lesbar. Wenn RDAP_PROXY gesetzt ist (Cloudflare Worker, siehe rdap-proxy-worker.js), läuft .de darüber. */
-const RDAP_PROXY="https://black-wind-2956.korotkiy-dev.workers.dev/";
+const RDAP_PROXY="https://black-wind-2956.korotkiy-dev.workers.dev";
 async function rdap(domain,tld){const b=await rdapBase(tld);if(!b)return"weak";
  const proxied=RDAP_PROXY&&b.startsWith("https://rdap.denic.de"),url=proxied?RDAP_PROXY.replace(/\/$/,"")+"/domain/"+domain:(b.endsWith("/")?b:b+"/")+"domain/"+domain;
  for(let a=0;a<6;a++){if(ctl.stop)return"unclear";await rdapSlot(b);if(ctl.stop){rdapDone(b,false);return"unclear"}
