@@ -314,9 +314,9 @@ const LANGS=["en","de","ru"];
 const T={
 lead:["Professional domain availability checker, right in your browser.","Professionelle Domain-Verfügbarkeitsprüfung, direkt im Browser.","Профессиональная проверка доступности доменов прямо в браузере."],
 leadAdv:["Try Advanced mode for bulk name ideas: prefix + name combinations, short domains, name + characters.","Im Modus „Erweitert“ prüfst du viele Namensideen auf einmal: Präfix + Name, kurze Domains, Name + Zeichen.","Попробуйте режим «Расширенно» для множества идей имён: префикс + имя, короткие домены, имя + символы."],
-leadFree:["Free, no account, no tracking, no ads.","Kostenlos, ohne Konto, ohne Tracking, ohne Werbung.","Бесплатно, без аккаунта, без отслеживания, без рекламы."],
+leadFree:["Free, no account, no tracking, no ad banners.","Kostenlos, ohne Konto, ohne Tracking, ohne Werbebanner.","Бесплатно, без аккаунта, без отслеживания, без рекламных баннеров."],
 donate:["Support this free tool","Dieses kostenlose Tool unterstützen","Поддержать проект"],
-coffeeA:["Like it? Keep it free and ad-free: ","Gefällt dir das Tool? Halte es kostenlos und werbefrei: ","Нравится? Пусть остаётся бесплатным и без рекламы: "],
+coffeeA:["Like it? Keep it free of banners: ","Gefällt dir das Tool? Halte es kostenlos und bannerfrei: ","Нравится? Пусть остаётся бесплатным и без баннеров: "],
 coffeeB:["buy me a coffee ☕","spendier mir einen Kaffee ☕","угости меня кофе ☕"],
 simple:["Simple","Einfach","Просто"],
 adv:["Advanced","Erweitert","Расширенно"],
@@ -373,7 +373,7 @@ a1:["Fast (NS query only)","Schnell (nur NS-Abfrage)","Быстро (тольк�
 x0:["NS query, plus an RDAP registry lookup on NXDOMAIN: also detects registered domains without DNS records. More reliable, but slower.","NS-Abfrage, bei NXDOMAIN zusätzlich RDAP-Registerabfrage: erkennt auch registrierte Domains ohne DNS-Eintrag. Verlässlicher, aber langsamer.","NS-запрос, при NXDOMAIN ещё RDAP-запрос к реестру: находит и домены без DNS-записей. Надёжнее, но медленнее."],
 x1:["One NS query per domain: NXDOMAIN = free, any other valid answer = taken. Very fast, but misses registered domains without DNS records.","Eine NS-Abfrage pro Domain: NXDOMAIN = frei, jede andere gültige Antwort = belegt. Sehr schnell, übersieht aber registrierte Domains ohne DNS-Eintrag.","Один NS-запрос на домен: NXDOMAIN = свободен, иначе занят. Очень быстро, но пропускает зарегистрированные домены без DNS-записей."],
 reg:["Registrar for “Buy”","Registrar für „Kaufen“","Регистратор для «Купить»"],
-regNote:["“Buy” opens the registrar’s search page with the domain. Price and availability are shown there.","„Kaufen“ öffnet die Suchseite des Registrars mit der Domain. Preis und Verfügbarkeit zeigt dort der Registrar.","«Купить» открывает страницу поиска регистратора. Цену и доступность покажет регистратор."],
+regNote:[()=>"“Buy” opens the registrar’s search page with the domain. Price and availability are shown there."+(affOn()?" Advertising: the buy links to the selected registrar are affiliate links. If you buy there, I receive a commission; the price stays the same for you.":""),()=>"„Kaufen“ öffnet die Suchseite des Registrars mit der Domain. Preis und Verfügbarkeit zeigt dort der Registrar."+(affOn()?" Werbung: Die Kaufen-Links zum gewählten Registrar sind Partnerlinks (Affiliate). Wenn du dort kaufst, erhalte ich eine Provision; der Preis bleibt für dich gleich.":""),()=>"«Купить» открывает страницу поиска регистратора. Цену и доступность покажет регистратор."+(affOn()?" Реклама: ссылки «Купить» на выбранного регистратора — партнёрские. Если вы купите там домен, я получу комиссию; для вас цена не меняется.":"")],
 reset:["Reset","Zurücksetzen","Сброс"],
 resetBtn:["Reset everything …","Alles zurücksetzen …","Сбросить всё …"],
 resetAsk:["Delete all inputs and settings, including favorites, custom extensions and language? This cannot be undone.","Alle Eingaben und Einstellungen löschen, auch Merkliste, eigene Endungen und Sprache? Das lässt sich nicht rückgängig machen.","Удалить все данные и настройки, включая избранное, свои зоны и язык? Это нельзя отменить."],
@@ -383,11 +383,12 @@ start:["Start","Starten","Начать"],
 bigT:["Large run","Großer Lauf","Большой запуск"],
 big:[n=>`That is up to ${n} queries and may take a long time. Tip: try fewer lengths or extensions first.`,n=>`Das sind bis zu ${n} Abfragen. Das kann lange dauern. Tipp: erst weniger Längen oder Endungen prüfen.`,n=>`Это до ${n} запросов, возможно, придётся долго ждать. Совет: сначала проверьте меньше длин или зон.`],
 favEmpty:["Nothing here yet. Click ✅ in the results and choose “Add to favorites”.","Noch leer. Klicke in den Ergebnissen auf ✅ und wähle „Zur Merkliste hinzufügen“.","Пока пусто. Нажмите ✅ в результатах и выберите «В избранное»."],
-favNote:["Status is not re-checked here. Verify with the registrar before buying.","Der Status wird hier nicht erneut geprüft. Vor dem Kauf beim Registrar gegenprüfen.","Статус здесь повторно не проверяется. Перед покупкой проверьте у регистратора."],
+favNote:[()=>"Status is not re-checked here. Verify with the registrar before buying."+(affOn()?" * Affiliate link (advertising).":""),()=>"Der Status wird hier nicht erneut geprüft. Vor dem Kauf beim Registrar gegenprüfen."+(affOn()?" * Partnerlink (Werbung).":""),()=>"Статус здесь повторно не проверяется. Перед покупкой проверьте у регистратора."+(affOn()?" * Партнёрская ссылка (реклама).":"")],
 copyAll:["Copy all","Alle kopieren","Копировать все"],
 remove:["Remove","Entfernen","Убрать"],
 buy:[r=>`Buy at ${r}`,r=>`Bei ${r} kaufen`,r=>`Купить в ${r}`],
 buyS:["Buy","Kaufen","Купить"],
+aff:[" (affiliate link, ad)"," (Partnerlink, Werbung)"," (партнёрская ссылка, реклама)"],
 whois:["Whois check","Whois-Gegenprüfung","Проверить в whois"],
 addFav:["Add to favorites","Zur Merkliste hinzufügen","В избранное"],
 remFav:["Remove from favorites","Aus Merkliste entfernen","Убрать из избранного"],
@@ -399,7 +400,7 @@ noRes:["No free results. Try other names or more extensions.","Keine freien Tref
 foot:["Only names with at least one free result (✅, click for options) are listed. “·” = taken or unclear. 🟡 = DNS free, RDAP not verifiable. ⭐ = on your favorites. ","Gelistet werden nur Namen mit mindestens einem freien Treffer (✅, Klick für Optionen). „·“ = belegt oder unklar. 🟡 = DNS frei, RDAP nicht prüfbar. ⭐ = auf der Merkliste. ","Показаны только имена хотя бы с одним свободным результатом (✅, нажмите для вариантов). «·» = занято или неясно. 🟡 = DNS: свободен, RDAP недоступен. ⭐ = в избранном. "],
 n0:["“Free” means: no DNS record and not registered according to RDAP. Even RDAP cannot reliably detect reserved, blocked or premium domains – verify with the registrar before buying.","„Frei“ heißt: kein DNS-Eintrag und laut RDAP nicht registriert. Reservierte, gesperrte oder Premium-Domains kann auch RDAP nicht sicher erkennen – vor dem Kauf beim Registrar gegenprüfen.","«Свободен» означает: нет DNS-записи и по данным RDAP не зарегистрирован. Зарезервированные, заблокированные и премиум-домены не определяет надёжно даже RDAP – проверьте у регистратора."],
 n1:["“Free” only means: no DNS record. Registered but unconfigured, reserved, blocked or premium domains may appear this way – verify with the registrar before buying.","„Frei“ heißt nur: kein DNS-Eintrag. Registrierte, aber nicht konfigurierte sowie reservierte, gesperrte oder Premium-Domains können so erscheinen – vor dem Kauf beim Registrar gegenprüfen.","«Свободен» означает лишь: нет DNS-записи. Так могут выглядеть зарегистрированные, но не настроенные, а также зарезервированные и премиум-домены – проверьте у регистратора."],
-priv:["No account, no tracking, no ads. The domain names you check are sent only to Cloudflare (DNS-over-HTTPS), IANA and the registry RDAP servers, straight from your browser.","Kein Konto, kein Tracking, keine Werbung. Die geprüften Domainnamen gehen direkt aus deinem Browser nur an Cloudflare (DNS-over-HTTPS), IANA und die RDAP-Server der Registries.","Без аккаунта, трекинга и рекламы. Проверяемые домены отправляются прямо из браузера только в Cloudflare (DNS-over-HTTPS), IANA и RDAP-серверы реестров."],
+priv:["No account, no tracking, no ad banners. The domain names you check are sent only to Cloudflare (DNS-over-HTTPS), IANA and the registry RDAP servers, straight from your browser.","Kein Konto, kein Tracking, keine Werbebanner. Die geprüften Domainnamen gehen direkt aus deinem Browser nur an Cloudflare (DNS-over-HTTPS), IANA und die RDAP-Server der Registries.","Без аккаунта, трекинга и рекламных баннеровы. Проверяемые домены отправляются прямо из браузера только в Cloudflare (DNS-over-HTTPS), IANA и RDAP-серверы реестров."],
 weakTip:["DNS says free, RDAP check not possible (registry blocked or throttled) – please verify with Whois","DNS sagt frei, RDAP-Prüfung nicht möglich (Registry blockiert oder drosselt) – bitte per Whois gegenprüfen","DNS: свободен, RDAP-проверка невозможна (реестр блокирует или ограничивает) – проверьте через whois"],
 stats:[(d,t,f,u)=>`Checked ${d} / ${t} · free ${f} · unclear ${u}`,(d,t,f,u)=>`Geprüft ${d} / ${t} · frei ${f} · unklar ${u}`,(d,t,f,u)=>`Проверено ${d} / ${t} · свободно ${f} · неясно ${u}`],
 qps:["queries/s","Abfragen/s","запросов/с"],
@@ -421,6 +422,12 @@ let S;try{S={...DEF,...JSON.parse(localStorage.getItem("dc")||"{}")}}catch(e){S=
 const save=()=>{try{localStorage.setItem("dc",JSON.stringify(S))}catch(e){}};
 const ALL=DEF.tlds,PRESETS={pop:["com","de","net"],tech:["io","ai","dev","app","tech"],all:ALL};
 const REGS={namecheap:["Namecheap",d=>`https://www.namecheap.com/domains/registration/results/?domain=${d}`],porkbun:["Porkbun",d=>`https://porkbun.com/checkout/search?q=${d}`],godaddy:["GoDaddy",d=>`https://www.godaddy.com/domainsearch/find?domainToCheck=${d}`]};
+/* Affiliate: Tracking-Link je Registrar aus dem Partnernetzwerk (Impact, CJ, Awin ...).
+   String = Präfix, das auf den Parameter endet, der die Ziel-URL aufnimmt (z. B. "https://namecheap.pxf.io/XXXX?u=");
+   Funktion = (zielUrl,domain)=>fertigeUrl. Leer = direkter Link ohne Provision (dann erscheint auch kein Hinweis). */
+const AFF={namecheap:"",porkbun:"",godaddy:""};
+const affOn=()=>!!AFF[S.reg];
+const buyUrl=d=>{const u=REGS[S.reg][1](encodeURIComponent(d)),a=AFF[S.reg];return typeof a==="function"?a(u,d):a?a+encodeURIComponent(u):u};
 const $=s=>document.querySelector(s),L=()=>LANGS.indexOf(S.lang);
 const syncLang=()=>{const l=document.documentElement.getAttribute("data-lang");S.lang=LANGS.includes(l)?l:"en"};syncLang();
 const t=(k,...a)=>{const v=T[k][L()];return typeof v==="function"?v(...a):v};
@@ -523,12 +530,12 @@ const freeDomains=()=>{const o=[];for(const[l,s]of run.rows)for(const x of run.r
 /* ---------- Aktionen ---------- */
 const copy=async s=>{try{await navigator.clipboard.writeText(s)}catch(e){const a=document.createElement("textarea");a.value=s;document.body.appendChild(a);a.select();document.execCommand("copy");a.remove()}};
 const whois=d=>window.open(d.endsWith(".de")?`https://webwhois.denic.de/?lang=de&query=${d}`:`https://www.whois.com/whois/${d}`,"_blank","noopener");
-const buy=d=>window.open(REGS[S.reg][1](encodeURIComponent(d)),"_blank","noopener");
+const buy=d=>window.open(buyUrl(d),"_blank","noopener"+(affOn()?",noreferrer":""));
 const isFav=d=>S.fav.includes(d);
 function toggleFav(d){S.fav=isFav(d)?S.fav.filter(x=>x!==d):[...S.fav,d];save();ui();draw()}
 function openMenu(btn,d){const m=$("#rmenu"),rn=REGS[S.reg][0],f=isFav(d);
  m.innerHTML=`<div class="d">${esc(d)}</div>`;
- [[t("whois"),()=>whois(d)],[t("buy",rn),()=>buy(d)],[f?t("remFav"):t("addFav"),()=>toggleFav(d)],[t("copyD"),()=>copy(d)]].forEach(([txt,fn])=>{const b=document.createElement("button");b.textContent=txt;b.onclick=()=>{m.style.display="none";fn()};m.appendChild(b)});
+ [[t("whois"),()=>whois(d)],[t("buy",rn)+(affOn()?t("aff"):""),()=>buy(d)],[f?t("remFav"):t("addFav"),()=>toggleFav(d)],[t("copyD"),()=>copy(d)]].forEach(([txt,fn])=>{const b=document.createElement("button");b.textContent=txt;b.onclick=()=>{m.style.display="none";fn()};m.appendChild(b)});
  m.style.display="block";const r=btn.getBoundingClientRect();m.style.left=Math.max(8,Math.min(r.left,innerWidth-m.offsetWidth-8))+"px";m.style.top=Math.min(r.bottom+4,innerHeight-m.offsetHeight-8)+"px"}
 document.addEventListener("click",e=>{if(!e.target.closest("#rmenu")&&!e.target.closest("button.free"))$("#rmenu").style.display="none"});
 
@@ -587,7 +594,7 @@ function ui(){
 function dur(s){s=Math.floor(s);const u=S.lang=="ru"?["с","мин","ч"]:["s","min","h"];return s<60?`${s} ${u[0]}`:s<3600?`${Math.floor(s/60)} ${u[1]}`:`${Math.floor(s/3600)} ${u[2]} ${String(Math.floor(s%3600/60)).padStart(2,"0")} ${u[1]}`}
 function favList(){const f=$("#favList");f.innerHTML="";if(!S.fav.length){f.innerHTML=`<p class="note">${esc(t("favEmpty"))}</p>`}
  S.fav.forEach(d=>{const r=document.createElement("div");r.className="favrow";r.innerHTML=`<code>${esc(d)}</code>`;
-  [[t("buyS"),()=>buy(d)],["Whois",()=>whois(d)],["🗑",()=>{S.fav=S.fav.filter(x=>x!==d);save();ui();draw()}]].forEach(([x,fn])=>{const b=document.createElement("button");b.textContent=x;b.onclick=fn;r.appendChild(b)});f.appendChild(r)});
+  [[t("buyS")+(affOn()?" *":""),()=>buy(d)],["Whois",()=>whois(d)],["🗑",()=>{S.fav=S.fav.filter(x=>x!==d);save();ui();draw()}]].forEach(([x,fn])=>{const b=document.createElement("button");b.textContent=x;b.onclick=fn;r.appendChild(b)});f.appendChild(r)});
  $("#favCopy").disabled=!S.fav.length}
 function draw(){
  const bar=$("#bar");bar.classList.toggle("hide",!run.total);bar.max=Math.max(run.total,1);bar.value=run.done;

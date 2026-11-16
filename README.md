@@ -12,6 +12,7 @@ Ohne Konto, ohne Tracking, ohne Build-Schritt: reines HTML/CSS/JS, gehostet übe
 | `hilfe.html`, `nutzungsbedingungen.html` | Hilfe und Nutzungsbedingungen |
 | `datenschutz.html`, `impressum.html` | Rechtliche Seiten |
 | `style.css`, `site.js` | gemeinsames Design, Sprachumschaltung (`?lang=de\|en\|ru`, Browsersprache DE/RU, sonst Englisch), Menü |
+| `HANDOFF.md` | Monetarisierung: Stand Affiliate-Umsetzung und Backlog |
 | `CNAME` | Custom Domain für GitHub Pages (`domainatcall.com`) |
 | `404.html`, `robots.txt`, `sitemap.xml`, `.nojekyll` | Pages-/SEO-Grundlagen |
 
@@ -61,6 +62,6 @@ Außerdem in `dk-ai.de` die Navigation von `domain-checker/index.html` auf `http
 
 - Einstellungen und Merkliste liegen im `localStorage` unter der neuen Domain (Schlüssel `dc`). Nutzereinstellungen von
   `dk-ai.de` werden nicht übernommen, weil der Browser sie je Domain trennt.
-- Kontakt-E-Mail in Impressum, Datenschutz, Hilfe und Nutzungsbedingungen ist weiterhin `info@dk-ai.de`.
+- Kontakt-E-Mail in Impressum, Datenschutz und Hilfe ist `info@domainatcall.com`. Das Postfach muss existieren (MX-Einträge bzw. Weiterleitung beim Domain-Anbieter), sonst gehen Mails verloren; GitHub Pages hostet keine E-Mail.
 - Favicons: helle und dunkle Variante (`favicon-16x16.png`, `favicon-32x32.png`, `favicon.ico` hell; `favicon-dark-*.png` dunkel; `favicon-adaptiv.svg` enthält beide und schaltet per Farbschema um). App-Icons (`apple-touch-icon.png`, `icon-192/512.png`, `icon-maskable-512.png`) sind die helle Variante auf Weiß. Beim Tausch den Cache-Buster `?v=5` in den `<head>`-Links erhöhen.
 - Das Logo in der Kopfzeile (`logo-light.svg`, `logo-dark.svg`) ist weiterhin das von DK-AI.
