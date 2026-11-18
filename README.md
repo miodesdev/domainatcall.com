@@ -1,4 +1,4 @@
-# Domain at Call
+# **domain** *at call*
 
 Web-Tool, das im Browser prüft, ob Domainnamen frei sind (DNS-over-HTTPS + RDAP).
 Ohne Konto, ohne Tracking, ohne Build-Schritt: reines HTML/CSS/JS, gehostet über GitHub Pages unter
@@ -48,11 +48,11 @@ in diesem Ordner entfallen oder ebenfalls weiterleiten):
 
 ```html
 <!doctype html><meta charset="utf-8">
-<title>Domain at Call</title>
+<title>domain at call</title>
 <link rel="canonical" href="https://domainatcall.com/">
 <meta http-equiv="refresh" content="0;url=https://domainatcall.com/">
 <script>location.replace("https://domainatcall.com/"+location.search)</script>
-<a href="https://domainatcall.com/">Domain at Call</a>
+<a href="https://domainatcall.com/">domain at call</a>
 ```
 
 Außerdem in `dk-ai.de` die Navigation von `domain-checker/index.html` auf `https://domainatcall.com/` umstellen

@@ -1,4 +1,4 @@
-# Handoff: Monetarisierung von Domain at Call
+# Handoff: Monetarisierung von domain at call
 
 Stand: 16. November 2026
 
@@ -42,7 +42,7 @@ Code ist fertig und getestet, es fehlen nur die **Partner-IDs**.
 | # | Idee | Aufwand | Hinweis |
 |---|---|---|---|
 | 2 | **Spenden ausbauen** | klein | Stripe-Link (`stripe.com/@dkai`) und „Coffee“-Hinweis existieren schon (`#coffee` erscheint nach Lauf mit freien Treffern). Evtl. Hinweis erst nach mehreren Läufen zeigen. |
-| 3 | **Pro-Version / Abo** | groß | Domain-Watch (E-Mail, sobald eine Domain frei wird), Bulk-Listen, CSV-Export, Merkliste-Sync. Braucht Backend und Konto (nur für Pro). Startpunkt: vorhandener Cloudflare Worker `black-wind-2956.korotkiy-dev.workers.dev` (RDAP-Proxy) plus Stripe. Datenschutz und Nutzungsbedingungen müssten erweitert werden. |
+| 3 | **Pro-Version / Abo** | groß | Domain-Watch (E-Mail, sobald eine Domain frei wird), Bulk-Listen, CSV-Export, Merkliste-Sync. Braucht Backend und Konto (nur für Pro). Dafür wäre ein eigenes Backend plus Stripe nötig. Datenschutz und Nutzungsbedingungen müssten erweitert werden. |
 | 4 | **Cross-Selling** | klein–mittel | Hosting, E-Mail, Website-Baukasten, SSL per Affiliate auf Hilfe-/Inhaltsseiten, klar gekennzeichnet. |
 | 5 | **Traffic aufbauen** (Voraussetzung für alles) | mittel | Unterseiten je Endung („.de-Domain prüfen“, „.ai-Domain prüfen“) und je Anwendungsfall („Domain-Ideen für …“), `sitemap.xml` erweitern, Verlinkung aus Foren/Communities, Beitrag auf dk-ai.de. |
 | 6 | **Display-Werbung (AdSense o. ä.)** | klein | Eher nicht empfohlen: braucht Consent-Banner (TDDDG § 25), widerspricht dem Datenschutz-Konzept, geringer Ertrag bei einer Ein-Seiten-Tool-Seite. |
