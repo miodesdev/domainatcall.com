@@ -311,7 +311,7 @@
 <script>
 
 "use strict";
-/* ---------- Texte: [en, de, es, ru] ---------- */
+/* ---------- Texte: [en, de, ru] ---------- */
 const LANGS=["en","de","ru"];
 const T={
 lead:["Professional domain availability checker, right in your browser.","Professionelle Domain-Verfügbarkeitsprüfung, direkt im Browser.","Профессиональная проверка доступности доменов прямо в браузере."],
@@ -427,6 +427,7 @@ let S;try{S={...DEF,...JSON.parse(localStorage.getItem("dc")||"{}")}}catch(e){S=
 const save=()=>{try{localStorage.setItem("dc",JSON.stringify(S))}catch(e){}};
 const ALL=DEF.tlds,PRESETS={pop:["com","de","net"],tech:["io","ai","dev","app","tech"],all:ALL};
 const REGS={namecheap:["Namecheap",d=>`https://www.namecheap.com/domains/registration/results/?domain=${d}`],porkbun:["Porkbun",d=>`https://porkbun.com/checkout/search?q=${d}`],godaddy:["GoDaddy",d=>`https://www.godaddy.com/domainsearch/find?domainToCheck=${d}`]};
+if(!Object.hasOwn(REGS,S.reg))S.reg=DEF.reg; /* alter/ungültiger localStorage-Wert */
 const buyUrl=d=>REGS[S.reg][1](encodeURIComponent(d));
 const $=s=>document.querySelector(s),L=()=>LANGS.indexOf(S.lang);
 const syncLang=()=>{const l=document.documentElement.getAttribute("data-lang");S.lang=LANGS.includes(l)?l:"en"};syncLang();

@@ -47,7 +47,8 @@
 <tr><th>Anzeige</th><th>Bedeutung</th></tr>
 <tr><td>✅</td><td>Voraussichtlich frei. Klick öffnet ein Menü.</td></tr>
 <tr><td>⭐</td><td>Auf deiner Merkliste. Der Status wird nicht erneut geprüft.</td></tr>
-<tr><td>·</td><td>Nicht frei (belegt) oder nicht eindeutig prüfbar.</td></tr>
+<tr><td>🟡</td><td>DNS frei, aber per RDAP nicht bestätigt (z. B. .de: DENIC blockiert Browser-Abfragen). Bitte per Whois-Gegenprüfung kontrollieren.</td></tr>
+<tr><td>·</td><td>Nicht frei (belegt) oder nicht eindeutig prüfbar (z. B. Serverfehler).</td></tr>
 </table>
 <p><strong>Menü bei ✅:</strong> Whois-Gegenprüfung, beim Registrar kaufen, zur Merkliste hinzufügen, Domain kopieren.</p>
 <p><strong>Freie kopieren</strong> legt alle freien Domains (alle Treffer, nicht nur die angezeigten) in die Zwischenablage, eine pro Zeile. Die Tabelle zeigt höchstens 1.000 Zeilen.</p>
@@ -70,7 +71,7 @@
 <li><strong>Prüfmethode:</strong>
 <ul>
 <li><em>Schnell (nur NS-Abfrage):</em> eine DNS-Abfrage pro Domain. Sehr schnell. Eine registrierte, aber nicht eingerichtete Domain kann dabei fälschlich als frei erscheinen.</li>
-<li><em>Gründlich (DNS + RDAP):</em> zusätzlich eine Registrierungsabfrage (RDAP) beim zuständigen Registry-Server. Genauer, aber deutlich langsamer, weil Server Abfragen drosseln. Manche Registry-Server erlauben keine Abfragen aus dem Browser; dann ist das Ergebnis „unklar“.</li>
+<li><em>Gründlich (DNS + RDAP):</em> zusätzlich eine Registrierungsabfrage (RDAP) beim zuständigen Registry-Server. Genauer, aber deutlich langsamer, weil Server Abfragen drosseln. Manche Registry-Server erlauben keine Abfragen aus dem Browser; dann steht der Treffer mit 🟡 in der Tabelle (DNS frei, nicht per RDAP bestätigt).</li>
 </ul></li>
 <li><strong>Registrar für „Kaufen“:</strong> Namecheap, Porkbun oder GoDaddy. „Kaufen“ öffnet die Suchseite des Registrars mit deiner Domain. Es sind keine Partnerlinks, ich erhalte keine Provision.</li>
 <li><strong>Zurücksetzen:</strong> löscht alle gespeicherten Eingaben und Einstellungen, auch die Merkliste.</li>
@@ -83,7 +84,7 @@
 <h3>Warum dauert „Gründlich“ so lange?</h3>
 <p>Die RDAP-Server der Registries begrenzen die Anfragen. Das Tool arbeitet daher mit weniger parallelen Abfragen und wartet bei Drosselung. Nutze für große Läufe „Schnell“ und prüfe nur die Treffer anschließend gründlich.</p>
 <h3>Viele Ergebnisse sind „unklar“.</h3>
-<p>Das passiert bei Serverfehlern, Drosselung, fehlendem RDAP-Server für eine Endung oder wenn ein Registry-Server Browser-Abfragen nicht erlaubt. Wiederhole den Lauf später, wähle „Schnell“ oder nutze die Whois-Gegenprüfung.</p>
+<p>Das passiert bei Serverfehlern oder Drosselung. Fehlt für eine Endung der RDAP-Server oder erlaubt er keine Browser-Abfragen, zeigt die Tabelle stattdessen 🟡. Wiederhole den Lauf später, wähle „Schnell“ oder nutze die Whois-Gegenprüfung.</p>
 <h3>Sind meine Eingaben privat?</h3>
 <p>Meine Server sehen nichts. Zum Prüfen sendet dein Browser die Domainnamen aber direkt an Cloudflare (DNS) und – bei „Gründlich“ – an die jeweilige Registry. Wenn ein Name vertraulich ist, bedenke das. Einzelheiten stehen in der <a data-i="datenschutz.html#webtool" href="datenschutz.html#webtool">Datenschutzerklärung</a>.</p>
 <h3>Wo liegen meine Einstellungen?</h3>
@@ -109,7 +110,8 @@
 <tr><th>Display</th><th>Meaning</th></tr>
 <tr><td>✅</td><td>Probably available. Click opens a menu.</td></tr>
 <tr><td>⭐</td><td>On your favorites list. Its status is not re-checked.</td></tr>
-<tr><td>·</td><td>Not available (taken) or not clearly determinable.</td></tr>
+<tr><td>🟡</td><td>DNS free, but not confirmed via RDAP (e.g. .de: DENIC blocks browser queries). Please verify with the Whois check.</td></tr>
+<tr><td>·</td><td>Not available (taken) or not clearly determinable (e.g. server error).</td></tr>
 </table>
 <p><strong>Menu on ✅:</strong> Whois check, buy at the registrar, add to favorites, copy domain.</p>
 <p><strong>Copy free</strong> puts all available domains (all hits, not just those displayed) on the clipboard, one per line. The table shows at most 1,000 rows.</p>
@@ -132,7 +134,7 @@
 <li><strong>Check method:</strong>
 <ul>
 <li><em>Fast (NS query only):</em> one DNS query per domain. Very fast. A registered but unconfigured domain may wrongly appear as available.</li>
-<li><em>Thorough (DNS + RDAP):</em> additionally a registration query (RDAP) at the responsible registry server. More accurate but much slower, because servers throttle queries. Some registry servers do not allow queries from a browser; the result is then “unclear”.</li>
+<li><em>Thorough (DNS + RDAP):</em> additionally a registration query (RDAP) at the responsible registry server. More accurate but much slower, because servers throttle queries. Some registry servers do not allow queries from a browser; the hit then appears with 🟡 in the table (DNS free, not confirmed via RDAP).</li>
 </ul></li>
 <li><strong>Registrar for “Buy”:</strong> Namecheap, Porkbun or GoDaddy. “Buy” opens the registrar’s search page with your domain. These are not affiliate links; I receive no commission.</li>
 <li><strong>Reset:</strong> deletes all saved inputs and settings, including the favorites.</li>
@@ -145,7 +147,7 @@
 <h3>Why does “Thorough” take so long?</h3>
 <p>Registry RDAP servers limit the number of requests. The tool therefore uses fewer parallel queries and waits when throttled. For large runs use “Fast” and check only the hits thoroughly afterwards.</p>
 <h3>Many results are “unclear”.</h3>
-<p>This happens with server errors, throttling, an extension without an RDAP server, or a registry server that does not allow browser queries. Repeat the run later, choose “Fast”, or use the Whois check.</p>
+<p>This happens with server errors or throttling. If an extension has no RDAP server or the server does not allow browser queries, the table shows 🟡 instead. Repeat the run later, choose “Fast”, or use the Whois check.</p>
 <h3>Is my input private?</h3>
 <p>My servers see nothing. To check, however, your browser sends the domain names directly to Cloudflare (DNS) and – with “Thorough” – to the respective registry. If a name is confidential, keep that in mind. Details are in the <a data-i="datenschutz.html#webtool" href="datenschutz.html#webtool">privacy policy</a>.</p>
 <h3>Where are my settings stored?</h3>
@@ -171,7 +173,8 @@
 <tr><th>Значок</th><th>Значение</th></tr>
 <tr><td>✅</td><td>Вероятно, свободен. Нажатие открывает меню.</td></tr>
 <tr><td>⭐</td><td>В избранном. Статус повторно не проверяется.</td></tr>
-<tr><td>·</td><td>Занят или не удалось определить однозначно.</td></tr>
+<tr><td>🟡</td><td>DNS: свободен, но RDAP не подтвердил (например, .de: DENIC блокирует запросы из браузера). Проверьте через whois.</td></tr>
+<tr><td>·</td><td>Занят или не удалось определить однозначно (например, ошибка сервера).</td></tr>
 </table>
 <p><strong>Меню у ✅:</strong> проверить в whois, купить у регистратора, в избранное, копировать домен.</p>
 <p><strong>Копировать свободные</strong> помещает в буфер обмена все свободные домены (все результаты, а не только показанные), по одному в строке. Таблица показывает не более 1000 строк.</p>
@@ -194,7 +197,7 @@
 <li><strong>Метод проверки:</strong>
 <ul>
 <li><em>Быстро (только NS-запрос):</em> один DNS-запрос на домен. Очень быстро. Зарегистрированный, но не настроенный домен может ошибочно показаться свободным.</li>
-<li><em>Точно (DNS + RDAP):</em> дополнительно запрос о регистрации (RDAP) к серверу соответствующего реестра. Точнее, но заметно медленнее, потому что серверы ограничивают число запросов. Некоторые серверы реестров не принимают запросы из браузера; тогда результат – «неясно».</li>
+<li><em>Точно (DNS + RDAP):</em> дополнительно запрос о регистрации (RDAP) к серверу соответствующего реестра. Точнее, но заметно медленнее, потому что серверы ограничивают число запросов. Некоторые серверы реестров не принимают запросы из браузера; тогда результат отмечается значком 🟡 (DNS: свободен, RDAP не подтвердил).</li>
 </ul></li>
 <li><strong>Регистратор для «Купить»:</strong> Namecheap, Porkbun или GoDaddy. «Купить» открывает страницу поиска регистратора с вашим доменом. Это не партнёрские ссылки, комиссию я не получаю.</li>
 <li><strong>Сброс:</strong> удаляет все сохранённые данные и настройки, в том числе избранное.</li>
@@ -207,7 +210,7 @@
 <h3>Почему режим «Точно» такой медленный?</h3>
 <p>RDAP-серверы реестров ограничивают число запросов. Поэтому инструмент отправляет меньше запросов параллельно и ждёт при ограничении. Для больших проверок используйте «Быстро», а затем проверьте только найденные домены точно.</p>
 <h3>Много результатов «неясно».</h3>
-<p>Так бывает при ошибках сервера, ограничении запросов, отсутствии RDAP-сервера у зоны или если сервер реестра не принимает запросы из браузера. Повторите проверку позже, выберите «Быстро» или воспользуйтесь проверкой в whois.</p>
+<p>Так бывает при ошибках сервера или ограничении запросов. Если у зоны нет RDAP-сервера или он не принимает запросы из браузера, в таблице вместо этого показан значок 🟡. Повторите проверку позже, выберите «Быстро» или воспользуйтесь проверкой в whois.</p>
 <h3>Мои данные остаются приватными?</h3>
 <p>Мои серверы ничего не видят. Но для проверки ваш браузер отправляет доменные имена напрямую в Cloudflare (DNS) и – в режиме «Точно» – в соответствующий реестр. Если имя конфиденциально, учтите это. Подробности – в <a data-i="datenschutz.html#webtool" href="datenschutz.html#webtool">политике конфиденциальности</a>.</p>
 <h3>Где хранятся мои настройки?</h3>
