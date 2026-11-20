@@ -95,10 +95,10 @@ main .hero h1{font-size:clamp(26px,8vw,40px)}
 /* ===== Apple-Look, Variante B ===== */
 /* Apple-Look für Domain at Call – drei Varianten über <html data-design="a|b|c">. Rein CSS, die Logik bleibt unverändert. */
 html[data-design]{--rc:18px;--rs:10px;--bl:none;--sh:0 1px 2px rgba(0,0,0,.04),0 4px 16px rgba(0,0,0,.05);--pb:var(--ac);--pbt:#fff;--page:var(--pg);--hd:color-mix(in srgb,var(--pg) 72%,transparent)}
-html[data-design=b]{--pg:#f5f5f7;--pn:#fff;--fd:#f2f2f7;--ln:rgba(0,0,0,.1);--tx:#1d1d1f;--mt:#6e6e73;--ac:#0071e3;--sg:rgba(118,118,128,.12);--th:#fff;--fl:rgba(118,118,128,.12)}
+html[data-design=b]{--pg:#f5f5f7;--pn:#fff;--fd:#f2f2f7;--ln:rgba(0,0,0,.1);--tx:#1d1d1f;--mt:#6e6e73;--ac:#0066cc;--sg:rgba(118,118,128,.12);--th:#fff;--fl:rgba(118,118,128,.12)}
 html[data-design=b]{--rc:26px;--rs:12px;--pn:rgba(255,255,255,.62);--fd:rgba(255,255,255,.75);--ln:rgba(255,255,255,.7);--bl:blur(28px) saturate(180%);--sh:0 8px 32px rgba(40,60,120,.12),inset 0 1px 0 rgba(255,255,255,.8);--page:radial-gradient(60% 50% at 12% 0,#cfe3ff,transparent),radial-gradient(50% 40% at 92% 8%,#f1d8ff,transparent),radial-gradient(60% 50% at 50% 100%,#d4fff0,transparent),#f5f5f7}
 @media(prefers-color-scheme:dark){
-html[data-design=b]{--pg:#000;--pn:#1c1c1e;--fd:#2c2c2e;--ln:rgba(255,255,255,.14);--tx:#f5f5f7;--mt:#98989d;--ac:#2997ff;--sg:rgba(118,118,128,.24);--th:#636366;--fl:rgba(118,118,128,.24)}
+html[data-design=b]{--pg:#000;--pn:#1c1c1e;--fd:#2c2c2e;--ln:rgba(255,255,255,.14);--tx:#f5f5f7;--mt:#98989d;--ac:#2997ff;--pbt:#000;--sg:rgba(118,118,128,.24);--th:#636366;--fl:rgba(118,118,128,.24)}
 html[data-design=b]{--pn:rgba(44,44,46,.55);--fd:rgba(255,255,255,.08);--ln:rgba(255,255,255,.14);--sh:0 8px 32px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.1);--page:radial-gradient(60% 50% at 12% 0,#1b2a66,transparent),radial-gradient(50% 40% at 92% 8%,#43205f,transparent),radial-gradient(60% 50% at 50% 100%,#0c3b3a,transparent),#000}}
 html[data-design] body{background:var(--page);background-attachment:fixed;color:var(--tx);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased}
 html[data-design] header{background:var(--hd);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:.5px solid var(--ln)}
@@ -113,7 +113,7 @@ html[data-design] .titlerow .intro p{font-size:17px;color:var(--mt)}
 html[data-design] footer{border-top:.5px solid var(--ln)}
 html[data-design] #tool {--bg:var(--pg);--panel:var(--pn);--field:var(--fd);--line:var(--ln);--ink:var(--tx);--mute:var(--mt);--acc:var(--ac);--accbg:color-mix(in srgb,var(--ac) 14%,transparent);--tint:var(--pn);--sw:var(--fl);--off:var(--fl);--offink:var(--mt);--ok:#248a3d;--okbg:rgba(52,199,89,.18);--bad:#d70015;--warn:#b25000;--ch:38px;background:transparent;border:0;padding:0;margin:10px 0;font-size:16px;color:var(--tx)}
 @media(prefers-color-scheme:dark){html[data-design] #tool {--ok:#30d158;--okbg:rgba(48,209,88,.2);--bad:#ff6961;--warn:#ffb340}}
-html[data-design] #tool:not([data-theme=white]){--ac:hsl(var(--h) 70% 42%)}
+html[data-design] #tool:not([data-theme=white]){--ac:hsl(var(--h) 70% 30%)}
 @media(prefers-color-scheme:dark){html[data-design] #tool:not([data-theme=white]){--ac:hsl(var(--h) 80% 66%)}}
 html[data-design] #tool .card{background:var(--pn);border:0;border-radius:var(--rc);padding:20px 22px;box-shadow:var(--sh);-webkit-backdrop-filter:var(--bl);backdrop-filter:var(--bl)}
 html[data-design] #tool .card h2{font-size:19px;font-weight:650;letter-spacing:-.015em;margin-bottom:10px}
@@ -137,7 +137,7 @@ html[data-design] #tool .seg button:hover:not(:disabled):not(.on),html[data-desi
 html[data-design] #tool .seg button.on,html[data-design] #tool .tabs button.on{background:var(--th);color:var(--tx);font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,.16),0 0 0 .5px rgba(0,0,0,.04)}
 html[data-design] #tool .seg button:disabled:not(.on){background:transparent;color:var(--mt)}
 html[data-design] #tool .chip{padding:0 14px;height:30px;font-size:14px;background:var(--fl);border:0}
-html[data-design] #tool .chip.on{background:var(--ac);color:#fff;font-weight:600}
+html[data-design] #tool .chip.on{background:var(--ac);color:var(--pbt);font-weight:600}
 html[data-design] #tool .chip:disabled:not(.on){background:var(--fl);color:var(--mt)}
 html[data-design] #tool #themeSeg .chip::before{border:0;box-shadow:inset 0 0 0 .5px rgba(0,0,0,.3)}
 html[data-design] #tool .tbl{background:var(--pn);border:0;border-radius:var(--rc);box-shadow:var(--sh);-webkit-backdrop-filter:var(--bl);backdrop-filter:var(--bl)}
@@ -163,7 +163,7 @@ html[data-design] #tool .err{color:var(--bad)}
 html[data-design]{--bg:var(--pg);--fg:var(--tx);--muted:var(--mt);--line:var(--ln);--accent:var(--ac);--card:var(--pn);--btn-fg:#fff}
 .bn strong{font-weight:700}.bn em{font-weight:400;font-style:italic}
 html[data-design] .card{background:var(--pn);border:0;border-radius:var(--rc);box-shadow:var(--sh);-webkit-backdrop-filter:var(--bl);backdrop-filter:var(--bl)}
-html[data-design] .btn{background:var(--ac);color:#fff;border-radius:999px;padding:12px 24px;font-weight:600}
+html[data-design] .btn{background:var(--ac);color:var(--pbt);border-radius:999px;padding:12px 24px;font-weight:600}
 html[data-design] .btn.alt{background:var(--fl);color:var(--ac);border:0}
 html[data-design] code,html[data-design] kbd{background:var(--fl);border:0;border-radius:6px}
 html[data-design] main h1,html[data-design] main h2{letter-spacing:-.02em}
@@ -187,3 +187,6 @@ html[data-design] #tool .coffee .donate{font-size:17px;padding:14px 26px}
 @media(max-width:520px){html[data-design] .donate,html[data-design] #tool .coffee .donate{white-space:normal;text-align:center;line-height:1.25;padding:14px 18px;font-size:16px;width:100%}html[data-design] body:not(:has(#tool)) main>.wrap{padding:22px 18px 26px;border-radius:22px}html[data-design] .titlerow>.donate{align-self:stretch}html[data-design] #tool .coffee{padding:16px;font-size:17px}}
 
 @media(max-width:700px){html[data-design] header .wrap{min-height:60px}html[data-design] header .brand{font-size:22px}html[data-design] header .brand img{width:36px;height:36px}}
+
+/* Barrierefreiheit: Bewegung reduzieren, wenn das System es verlangt */
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}}

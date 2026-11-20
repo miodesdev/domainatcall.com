@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src https:; manifest-src 'self'; base-uri 'self'; form-action 'none'">
 <meta name='impact-site-verification' value='229abeb6-cd4d-4e4f-8a3e-c012bf5c3467'>
 <title>domain at call – check domain names</title>
 <meta name="description" content="domain at call: checks in your browser whether domain names are available. No account, no tracking.">
@@ -210,11 +211,11 @@
   
   <div class="seg" id="lvl"></div>
   <button id="favBtn"></button>
-  <button id="setBtn" aria-label="Settings">⚙️</button>
+  <button id="setBtn" aria-label="Settings"><span aria-hidden="true">⚙️</span></button>
 </div>
 <div class="card" id="simpleBox">
-  <h2 data-t="ask"></h2>
-  <textarea id="kwS" spellcheck="false"></textarea>
+  <h2 data-t="ask" id="askH"></h2>
+  <textarea id="kwS" spellcheck="false" aria-labelledby="askH" aria-describedby="hint"></textarea>
   <div class="note" id="hint"></div>
 </div>
 
@@ -237,11 +238,11 @@
   <div class="card">
     <div id="m_keywords">
       <div class="row">
-        <div><label class="h" data-t="prefix"></label><input type="text" id="prefix" style="width:130px"></div>
+        <div><label class="h" data-t="prefix" for="prefix"></label><input type="text" id="prefix" style="width:130px"></div>
         <div><label class="h" data-t="hyphen"></label><label class="cb"><input type="checkbox" id="hyph"><span data-t="insert"></span></label></div>
         <div><span class="h" data-t="option"></span><div class="seg" id="pos"></div></div>
       </div>
-      <div style="margin-top:12px"><label class="h" data-t="names"></label><textarea id="kwA" spellcheck="false"></textarea></div>
+      <div style="margin-top:12px"><label class="h" data-t="names" for="kwA"></label><textarea id="kwA" spellcheck="false"></textarea></div>
     </div>
     <div id="m_short" class="hide">
       <div class="row">
@@ -251,7 +252,7 @@
     </div>
     <div id="m_expand" class="hide">
       <div class="row">
-        <div><label class="h" data-t="kw"></label><input type="text" id="eKw" style="width:200px"></div>
+        <div><label class="h" data-t="kw" for="eKw"></label><input type="text" id="eKw" style="width:200px"></div>
         <div><span class="h" data-t="extra"></span><span id="eLen"></span></div>
         <div><span class="h" data-t="chars"></span><div class="seg" id="eSet"></div></div>
       </div>
@@ -268,16 +269,16 @@
   <span class="sp"></span>
   <button id="copyFree" data-t="copyFree"></button>
 </div>
-<progress id="bar" class="hide" value="0" max="1"></progress>
+<progress id="bar" class="hide" value="0" max="1" aria-label="Progress"></progress>
 <div class="note" id="stats" style="margin:4px 0 8px"></div>
 <div class="tbl" id="tbl"></div>
 <p class="note coffee hide" id="coffee"><span data-t="coffeeA"></span><a class="donate" href="https://stripe.com/@dkai" target="_blank" rel="noopener" data-t="coffeeB"></a></p>
 <p class="note foot" id="foot"></p>
 <p class="note" id="priv"></p>
-<div id="rmenu" role="menu"></div>
+<div id="rmenu" role="menu" aria-label="Actions"></div>
 
-<dialog id="dSet">
-  <h2>⚙️ <span data-t="set"></span></h2>
+<dialog id="dSet" aria-labelledby="dSetH">
+  <h2 id="dSetH"><span aria-hidden="true">⚙️</span> <span data-t="set"></span></h2>
   <section><span class="h" data-t="theme"></span><div class="chips" id="themeSeg"></div></section>
   <section><span class="h" data-t="meth"></span><div class="seg" id="accSeg"></div><div class="note" id="accExp" style="margin-top:6px"></div></section>
   <section><span class="h" data-t="reg"></span><div class="seg" id="regSeg"></div><div class="note" style="margin-top:6px" data-t="regNote"></div></section>
@@ -285,15 +286,15 @@
   <div style="text-align:right"><button class="primary" data-close autofocus data-t="close"></button></div>
 </dialog>
 
-<dialog id="dFav">
-  <h2>⭐ <span data-t="fav"></span></h2>
+<dialog id="dFav" aria-labelledby="dFavH">
+  <h2 id="dFavH"><span aria-hidden="true">⭐</span> <span data-t="fav"></span></h2>
   <div id="favList"></div>
   <p class="note" data-t="favNote"></p>
   <div style="display:flex;justify-content:space-between"><button id="favCopy" data-t="copyAll"></button><button class="primary" data-close data-t="close"></button></div>
 </dialog>
 
-<dialog id="dBig">
-  <h2 data-t="bigT"></h2>
+<dialog id="dBig" aria-labelledby="dBigH">
+  <h2 id="dBigH" data-t="bigT"></h2>
   <p id="bigMsg"></p>
   <div style="display:flex;justify-content:flex-end;gap:8px"><button data-close data-t="cancel"></button><button class="primary" id="bigGo" data-t="start"></button></div>
 </dialog>
@@ -332,6 +333,8 @@ pick:["Pick individually …","Einzeln wählen …","Выбрать по одн�
 less:["Less","Weniger","Меньше"],
 noext:["No extension selected.","Keine Endung gewählt.","Зона не выбрана."],
 custom:["Custom","Eigene","Свои"],
+cx:["Custom extension","Eigene Endung","Своя зона"],cxOn:["use custom extension","Eigene Endung verwenden","использовать свою зону"],
+prog:["Progress","Fortschritt","Прогресс"],avail:["appears available","scheint frei","похоже, свободен"],acts:["Actions for","Aktionen für","Действия для"],
 m_keywords:["Prefix + names","Prefix + Namen","Префикс + имена"],
 m_short:["Short domains (1–4 characters)","Kurze Domains (1–4 Zeichen)","Короткие домены (1–4)"],
 m_expand:["Name + characters","Name + Zeichen","Имя + символы"],
@@ -538,9 +541,19 @@ const isFav=d=>S.fav.includes(d);
 function toggleFav(d){S.fav=isFav(d)?S.fav.filter(x=>x!==d):[...S.fav,d];save();ui();draw()}
 function openMenu(btn,d){const m=$("#rmenu"),rn=REGS[S.reg][0],f=isFav(d);
  m.innerHTML=`<div class="d">${esc(d)}</div>`;
- [[t("whois"),()=>whois(d)],[t("buy",rn)+(affOn()?t("aff"):""),()=>buy(d)],[f?t("remFav"):t("addFav"),()=>toggleFav(d)],[t("copyD"),()=>copy(d)]].forEach(([txt,fn])=>{const b=document.createElement("button");b.textContent=txt;b.onclick=()=>{m.style.display="none";fn()};m.appendChild(b)});
- m.style.display="block";const r=btn.getBoundingClientRect();m.style.left=Math.max(8,Math.min(r.left,innerWidth-m.offsetWidth-8))+"px";m.style.top=Math.min(r.bottom+4,innerHeight-m.offsetHeight-8)+"px"}
-document.addEventListener("click",e=>{if(!e.target.closest("#rmenu")&&!e.target.closest("button.free"))$("#rmenu").style.display="none"});
+ [[t("whois"),()=>whois(d)],[t("buy",rn)+(affOn()?t("aff"):""),()=>buy(d)],[f?t("remFav"):t("addFav"),()=>toggleFav(d)],[t("copyD"),()=>copy(d)]].forEach(([txt,fn])=>{const b=document.createElement("button");b.textContent=txt;b.setAttribute("role","menuitem");b.onclick=()=>{closeMenu(false);fn()};m.appendChild(b)});
+ m.setAttribute("aria-label",t("acts")+" "+d);menuOwner=btn;
+ m.style.display="block";const r=btn.getBoundingClientRect();m.style.left=Math.max(8,Math.min(r.left,innerWidth-m.offsetWidth-8))+"px";m.style.top=Math.min(r.bottom+4,innerHeight-m.offsetHeight-8)+"px";const f1=m.querySelector("button");if(f1)f1.focus()}
+let menuOwner=null;
+function closeMenu(back){const m=$("#rmenu");m.style.display="none";if(back&&menuOwner&&document.contains(menuOwner))menuOwner.focus();menuOwner=null}
+$("#rmenu").addEventListener("keydown",e=>{const it=[...$("#rmenu").querySelectorAll("button")],i=it.indexOf(document.activeElement);
+ if(e.key==="Escape"){e.preventDefault();e.stopPropagation();closeMenu(true)}
+ else if(e.key==="ArrowDown"){e.preventDefault();it[(i+1)%it.length].focus()}
+ else if(e.key==="ArrowUp"){e.preventDefault();it[(i-1+it.length)%it.length].focus()}
+ else if(e.key==="Home"){e.preventDefault();it[0].focus()}
+ else if(e.key==="End"){e.preventDefault();it[it.length-1].focus()}
+ else if(e.key==="Tab"){closeMenu(false)}});
+document.addEventListener("click",e=>{if(!e.target.closest("#rmenu")&&!e.target.closest("button.free"))closeMenu(false)});
 
 /* ---------- Oberfläche ---------- */
 function seg(el,opts,cur,on){el.innerHTML="";opts.forEach(([v,txt])=>{const b=document.createElement("button");b.textContent=txt;if(v===cur)b.className="on";b.disabled=run.running&&el.dataset.lock!=="0";b.onclick=()=>on(v);el.appendChild(b)})}
@@ -553,6 +566,7 @@ function ui(){
  document.querySelectorAll("[data-t]").forEach(e=>e.textContent=t(e.dataset.t));
  const busy=run.running;
  seg($("#lvl"),[["simple",t("simple")],["advanced",t("adv")]],S.lvl,v=>set("lvl",v));
+ $("#setBtn").setAttribute("aria-label",t("set"));$("#bar").setAttribute("aria-label",t("prog"));
  $("#favBtn").textContent="⭐ "+t("fav")+(S.fav.length?` (${S.fav.length})`:"");
  $("#simpleBox").classList.toggle("hide",!simple());$("#advBox").classList.toggle("hide",simple());
  for(const id of["kwS","kwA"]){const e=$("#"+id);if(e!==document.activeElement)e.value=S.kw;e.disabled=busy}
@@ -562,8 +576,8 @@ function ui(){
  const a=activeTLDs(),sm=$("#tldSum");sm.textContent=a.length?a.map(x=>"."+x).join("  "):t("noext");sm.className="note"+(a.length?"":" err");
  const open=!$("#tldDetail").classList.contains("hide");$("#tldMore").textContent=open?t("less"):t("pick");$("#tldMore").disabled=busy;sm.classList.toggle("hide",open);
  checks($("#tldGrid"),ALL,S.tlds,(v,on)=>{S.tlds=on?[...S.tlds,v]:S.tlds.filter(x=>x!==v);save();ui()},v=>"."+v);
- const cg=$("#custGrid");cg.innerHTML="";S.cust.forEach((txt,i)=>{const w=document.createElement("span");w.className="cust";const c=document.createElement("input");c.type="checkbox";c.checked=S.custOn[i];c.disabled=busy||!cleanTLD(txt);c.onchange=()=>{S.custOn[i]=c.checked;save();ui()};
-  const x=document.createElement("input");x.type="text";x.placeholder=".xyz";x.value=txt;x.disabled=busy;x.className=txt.trim().length>=2&&!cleanTLD(txt)?"bad":"";
+ const cg=$("#custGrid");cg.innerHTML="";S.cust.forEach((txt,i)=>{const w=document.createElement("span");w.className="cust";const c=document.createElement("input");c.type="checkbox";c.setAttribute("aria-label",t("cxOn")+" "+(i+1));c.checked=S.custOn[i];c.disabled=busy||!cleanTLD(txt);c.onchange=()=>{S.custOn[i]=c.checked;save();ui()};
+  const x=document.createElement("input");x.type="text";x.setAttribute("aria-label",t("cx")+" "+(i+1));x.placeholder=".xyz";x.value=txt;x.disabled=busy;x.className=txt.trim().length>=2&&!cleanTLD(txt)?"bad":"";
   x.oninput=()=>{const was=!!cleanTLD(S.cust[i]),is=!!cleanTLD(x.value);S.cust[i]=x.value;if(!is)S.custOn[i]=false;else if(!was)S.custOn[i]=true;save();ui();const n=$("#custGrid").children[i].querySelector("input[type=text]");n.focus();n.setSelectionRange(n.value.length,n.value.length)};
   x.onchange=()=>ui();w.append(c,x);cg.appendChild(w)});
  /* Erweitert */
@@ -609,7 +623,7 @@ function draw(){
  if(!run.total){tb.innerHTML=`<div class="empty"><b>🔍</b>${esc(t(simple()?"emptySimple":"emptyAdv"))}${simple()?`<br><br><button id="ex">${esc(t("example"))}</button>`:""}</div>`;const ex=$("#ex");if(ex)ex.onclick=()=>set("kw","sonnenhof, nordwind, blauwerk");return}
  const rows=[...run.rows].slice(0,1000);
  let h=`<table><thead><tr><th>Domain</th>${run.runTLDs.map(x=>`<th>.${esc(x)}</th>`).join("")}</tr></thead><tbody>`;
- for(const[l,fs]of rows)h+=`<tr><td>${esc(l)}</td>${run.runTLDs.map(x=>fs.has(x)?`<td><button class="free" data-d="${esc(l+"."+x)}" title="${esc(l+"."+x)}${run.weakSet.has(l+"."+x)?" – "+esc(t(x==="de"?"weakDe":"weakTip")):""}">${isFav(l+"."+x)?"⭐":run.weakSet.has(l+"."+x)?"🟡":"✅"}</button></td>`:`<td><span class="no">·</span></td>`).join("")}</tr>`;
+ for(const[l,fs]of rows)h+=`<tr><td>${esc(l)}</td>${run.runTLDs.map(x=>fs.has(x)?`<td><button class="free" data-d="${esc(l+"."+x)}" aria-haspopup="menu" aria-label="${esc(l+"."+x+" – "+t("avail"))}" title="${esc(l+"."+x)}${run.weakSet.has(l+"."+x)?" – "+esc(t(x==="de"?"weakDe":"weakTip")):""}">${isFav(l+"."+x)?"⭐":run.weakSet.has(l+"."+x)?"🟡":"✅"}</button></td>`:`<td><span class="no">·</span></td>`).join("")}</tr>`;
  h+="</tbody></table>";
  if(!run.running&&[...run.weakSet].some(x=>x.endsWith(".de")))h+=`<p class="note" style="padding:8px 12px">${esc(t("weakDeNote"))}</p>`;
  if(run.rows.size>1000)h+=`<p class="note" style="padding:8px 12px">${esc(t("shown",fmt(1000),fmt(run.rows.size)))}</p>`;
