@@ -1,9 +1,7 @@
 (function(){
 var d=document.documentElement;
 var ANCH=['webtool'];
-function pick(){var p=new URLSearchParams(location.search).get('lang');
- if(p==='de'||p==='en'||p==='ru')return p;
- var n=(navigator.language||'en').toLowerCase();return n.indexOf('de')===0?'de':(n.indexOf('ru')===0?'ru':'en');}
+function pick(){var l=d.getAttribute('data-lang');return(l==='de'||l==='en'||l==='ru')?l:'en';} /* Erkennung: Inline-Skript im <head> */
 function set(l){d.setAttribute('data-lang',l);d.setAttribute('lang',l);
  var a=document.querySelectorAll('a[data-i]');
  for(var i=0;i<a.length;i++){var h=a[i].getAttribute('data-i'),hash='';var k=h.indexOf('#');
