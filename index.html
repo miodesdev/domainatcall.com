@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src https:; manifest-src 'self'; base-uri 'self'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <title>domain at call – Domainnamen prüfen</title>
 <meta name="description" content="domain at call: prüft im Browser, ob Domainnamen frei sind. Kein Konto, kein Tracking.">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
@@ -528,8 +529,8 @@ const freeDomains=()=>{const o=[];for(const[l,s]of run.rows)for(const x of run.r
 
 /* ---------- Aktionen ---------- */
 const copy=async s=>{try{await navigator.clipboard.writeText(s)}catch(e){const a=document.createElement("textarea");a.value=s;document.body.appendChild(a);a.select();document.execCommand("copy");a.remove()}};
-const whois=d=>window.open(d.endsWith(".de")?`https://webwhois.denic.de/?lang=de&query=${d}`:`https://www.whois.com/whois/${d}`,"_blank","noopener");
-const buy=d=>window.open(buyUrl(d),"_blank","noopener");
+const whois=d=>window.open(d.endsWith(".de")?`https://webwhois.denic.de/?lang=de&query=${d}`:`https://www.whois.com/whois/${d}`,"_blank","noopener,noreferrer");
+const buy=d=>window.open(buyUrl(d),"_blank","noopener,noreferrer");
 const isFav=d=>S.fav.includes(d);
 function toggleFav(d){S.fav=isFav(d)?S.fav.filter(x=>x!==d):[...S.fav,d];save();ui();draw()}
 function openMenu(btn,d){const m=$("#rmenu"),rn=REGS[S.reg][0],f=isFav(d);

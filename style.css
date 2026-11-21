@@ -193,3 +193,9 @@ html[data-design] #tool .coffee .donate{font-size:17px;padding:14px 26px}
 .skip{position:absolute;left:-9999px;top:0;z-index:100;padding:10px 16px;background:var(--accent);color:var(--btn-fg);border-radius:0 0 8px 8px;text-decoration:none;font-size:15px;font-weight:600}
 .skip:focus{left:12px;outline:3px solid #ff9f0a;outline-offset:2px}
 main:focus{outline:none}
+
+/* Datenschutzerklärung: automatische Abschnittsnummern, Hinweisbox */
+body.privacy main{counter-reset:abschnitt}
+body.privacy main h2{counter-increment:abschnitt}
+body.privacy main h2::before{content:counter(abschnitt) ". "}
+.box{background:var(--card);border-left:4px solid var(--accent);padding:.8rem 1rem;border-radius:4px}
