@@ -474,7 +474,7 @@ const validate=l=>!l?"empty":l.length>63||/^-|-$/.test(l)||!OKCH.test(l)?"invali
 async function doh(domain){const r=await fetch(`https://cloudflare-dns.com/dns-query?name=${encodeURIComponent(domain)}&type=NS`,{headers:{accept:"application/dns-json"},signal:AbortSignal.timeout(8000)});return(await r.json()).Status}
 async function checkFast(domain){for(let a=0;a<3;a++){if(ctl.stop)return"unclear";try{const s=await doh(domain);if(s===3)return"free";if(s===0)return"taken"}catch(e){}if(a<2)await sleep(400*(a+1))}return"unclear"}
 let rdapMap=null;
-async function rdapBase(tld){if(!rdapMap){try{const j=await(await fetch("https://data.iana.org/rdap/dns.json")).json(),m={};for(const[tl,urls]of j.services){const b=urls.find(u=>u.startsWith("https://"))||urls[0];for(const x of tl)m[x.toLowerCase()]=b}rdapMap=m}catch(e){return null}}return rdapMap[tld]}
+async function rdapBase(tld){if(!rdapMap){try{const j=await(await fetch("https://data.iana.org/rdap/dns.json")).json(),m={};for(const[tl,urls]of j.services){const b=urls.find(u=>u.startsWith("https://"));if(!b)continue;for(const x of tl)m[x.toLowerCase()]=b}rdapMap=m}catch(e){return null}}return rdapMap[tld]}
 /* RDAP-Server drosseln viele Anfragen (z. B. DENIC für .de: HTTP 429). Darum pro Server: wenig parallel, Mindestabstand, Pause bei 429/5xx. */
 const rdapHost={};
 function hostState(b){return rdapHost[b]||(rdapHost[b]={active:0,next:0,pause:0,gap:150,q:[]})}
@@ -493,9 +493,10 @@ async function rdap(domain,tld){const b=await rdapBase(tld);if(!b)return"weak";
  const url=(b.endsWith("/")?b:b+"/")+"domain/"+domain;
  for(let a=0;a<6;a++){if(ctl.stop)return"unclear";await rdapSlot(b);if(ctl.stop){rdapDone(b,false);return"unclear"}
   if(hostState(b).dead>=4)return"weak";
-  let st=0,ra=0;try{const r=await fetch(url,{method:"HEAD",signal:AbortSignal.timeout(12000)});st=r.status;ra=(parseFloat(r.headers.get("retry-after"))||0)*1000}catch(e){}
+  let st=0,ra=0;try{const r=await fetch(url,{method:hostState(b).get?"GET":"HEAD",signal:AbortSignal.timeout(12000)});st=r.status;ra=(parseFloat(r.headers.get("retry-after"))||0)*1000}catch(e){}
   const hs=hostState(b);if(st===0)hs.dead=(hs.dead||0)+1;else hs.dead=0;
   const thr=st===429||st===503||st===0&&a>0;rdapDone(b,thr,ra);
+  if((st===405||st===501)&&!hs.get){hs.get=true;continue}
   if(st===404)return"free";if(st===200)return"taken";
   if(a<5)await sleep(thr?0:600*(a+1))}
  return"weak"}
