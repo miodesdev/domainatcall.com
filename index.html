@@ -25,7 +25,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#1637E8">
-<script>(function(){var d=document.documentElement,p=new URLSearchParams(location.search).get('lang'),l=(p==='de'||p==='en'||p==='ru')?p:null;if(!l){var a=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language];l='en';for(var i=0;i<a.length;i++){var n=String(a[i]||'').toLowerCase().split('-')[0];if(n==='de'||n==='en'||n==='ru'){l=n;break}}}d.setAttribute('lang',l);d.setAttribute('data-lang',l)})();</script>
+<script src="lang.js"></script>
 <link rel="stylesheet" href="style.css">
 <style>
 #tool{--h:178;--s:22%;--bg:hsl(var(--h) var(--s) 95%);--panel:#fff;--ink:#13201f;--mute:#5c6e6c;--line:hsl(var(--h) calc(var(--s)*.6) 80%);--acc:hsl(var(--h) 75% 27%);--accbg:hsl(var(--h) var(--s) 87%);--ok:#17924f;--okbg:#d8f3e3;--bad:#c0392b;--warn:#b86e00}
@@ -187,7 +187,7 @@
 </head>
 <body data-title-de="domain at call – Domainnamen prüfen" data-title-en="domain at call – check domain names" data-title-ru="domain at call – проверка доменных имён">
 <header><div class="wrap">
-<a class="brand" data-i="index.html" href="index.html"><picture><source media="(prefers-color-scheme: dark)" srcset="logo-dark.svg?v=4"><img src="logo-light.svg?v=4" alt="" width="34" height="34"></picture><span class="bn"><strong>domain</strong> <em>at call</em></span></a>
+<a class="brand" data-i="index.html" href="index.html"><picture><source media="(prefers-color-scheme: dark)" srcset="logo-dark.svg?v=5"><img src="logo-light.svg?v=5" alt="" width="34" height="34"></picture><span class="bn"><strong>domain</strong> <em>at call</em></span></a>
 <button class="burger" type="button" aria-expanded="false" aria-controls="menu"><span class="sr de" lang="de">Menü</span><span class="sr en" lang="en">Menu</span><span class="sr ru" lang="ru">Меню</span><i></i><i></i><i></i></button>
 <div class="menu" id="menu">
 <nav><a data-i="hilfe.html" href="hilfe.html"><span class="de" lang="de">Hilfe</span><span class="en" lang="en">Help</span><span class="ru" lang="ru">Справка</span></a>
@@ -322,7 +322,7 @@ simple:["Simple","Einfach","Просто"],
 adv:["Advanced","Erweitert","Расширенно"],
 ask:["What should your project be called?","Wie soll dein Projekt heißen?","Как будет называться ваш проект?"],
 names:["Names (comma, space or line break)","Namen (Komma, Leerzeichen oder Zeilenumbruch)","Имена (запятая, пробел или перенос строки)"],
-hintEmpty:["Separate several names with a comma, space or line break. Umlauts are adjusted automatically.","Mehrere Namen mit Komma, Leerzeichen oder Zeilenumbruch trennen. Umlaute werden automatisch angepasst.","Несколько имён разделяйте запятой, пробелом или переносом строки. Умлауты исправляются автоматически."],
+hintEmpty:["Separate several names with a comma, space or line break. Umlauts and accents are adjusted automatically.","Mehrere Namen mit Komma, Leerzeichen oder Zeilenumbruch trennen. Umlaute und Akzente werden automatisch angepasst.","Несколько имён разделяйте запятой, пробелом или переносом строки. Умлауты и диакритика исправляются автоматически."],
 will:["Will check: ","Wird geprüft als: ","Будет проверено: "],
 ext:["Extensions","Endungen","Зоны"],
 pop:["Popular","Beliebt","Популярные"],
@@ -416,6 +416,8 @@ e3:["Name is too long","Name ist zu lang","Имя слишком длинное"
 comb:["All names are combined pairwise.","Alle Namen werden paarweise kombiniert.","Все имена комбинируются попарно."],
 shown:[(s,a)=>`Display limited to the first ${s} of ${a} rows. “Copy free” includes all results.`,(s,a)=>`Anzeige begrenzt auf die ersten ${s} von ${a} Zeilen. „Freie kopieren“ enthält alle Treffer.`,(s,a)=>`Показаны первые ${s} из ${a} строк. «Копировать свободные» включает все результаты.`],
 copied:["Copied","Kopiert","Скопировано"],
+nonlat:["Letters outside the Latin alphabet (e.g. Cyrillic) are not supported: internationalized domain names (IDN) are not checked and these letters are ignored.","Buchstaben außerhalb des lateinischen Alphabets (z. B. Kyrillisch) werden nicht unterstützt: Internationalisierte Domainnamen (IDN) werden nicht geprüft, diese Buchstaben werden ignoriert.","Буквы вне латиницы (например, кириллица) не поддерживаются: интернационализированные домены (IDN) не проверяются, такие буквы игнорируются."],
+badTld:[x=>`Extension not found in the DNS root (no such TLD): ${x}. These were not checked.`,x=>`Endung existiert nicht in der DNS-Root (keine solche TLD): ${x}. Diese wurden nicht geprüft.`,x=>`Такой зоны нет в корне DNS (нет такого TLD): ${x}. Они не проверялись.`],
 };
 
 /* ---------- Zustand (localStorage) ---------- */
@@ -435,8 +437,11 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",
 
 /* ---------- Logik (1:1 aus der App) ---------- */
 const OKCH=/^[a-z0-9-]+$/;
-function cleanLabel(raw){let s=raw.trim().toLowerCase();const i=s.indexOf(".");if(i>=0)s=s.slice(0,i);
- s=s.replace(/ä/g,"ae").replace(/ö/g,"oe").replace(/ü/g,"ue").replace(/ß/g,"ss").replace(/[^a-z0-9-]/g,"").replace(/^-+|-+$/g,"");
+/* Umlaute und Akzente: ä→ae, é→e, ñ→n, ø→o … Nicht-lateinische Schrift (z. B. Kyrillisch) wird nicht umgewandelt. */
+function translit(s){return s.toLowerCase().replace(/ä/g,"ae").replace(/ö/g,"oe").replace(/ü/g,"ue").replace(/ß/g,"ss").replace(/æ/g,"ae").replace(/œ/g,"oe").replace(/ø/g,"o").replace(/đ/g,"d").replace(/ð/g,"d").replace(/ł/g,"l").replace(/þ/g,"th").normalize("NFD").replace(/[\u0300-\u036f]/g,"")}
+const nonLatin=s=>/[^\u0000-\u007f]/.test(translit(s));
+function cleanLabel(raw){let s=translit(raw.trim());const i=s.indexOf(".");if(i>=0)s=s.slice(0,i);
+ s=s.replace(/[^a-z0-9-]/g,"").replace(/^-+|-+$/g,"");
  return s&&s.length<=63?s:null}
 function cleanTLD(s){let x=s.trim().toLowerCase().replace(/^\.+/,"");return x.length>=2&&x.length<=63&&OKCH.test(x)&&!x.startsWith("-")&&!x.endsWith("-")?x:null}
 const activeTLDs=()=>{const o=ALL.filter(x=>S.tlds.includes(x));S.cust.forEach((r,i)=>{const c=cleanTLD(r);if(S.custOn[i]&&c&&!o.includes(c))o.push(c)});return o};
@@ -471,9 +476,13 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 let ctl={stop:false};
 const validate=l=>!l?"empty":l.length>63||/^-|-$/.test(l)||!OKCH.test(l)?"invalid":null;
 async function doh(domain){const r=await fetch(`https://cloudflare-dns.com/dns-query?name=${encodeURIComponent(domain)}&type=NS`,{headers:{accept:"application/dns-json"},signal:AbortSignal.timeout(8000)});return(await r.json()).Status}
+/* Eigene Endungen: gibt es die TLD wirklich? NS-Abfrage auf Root-Ebene, NXDOMAIN = keine solche TLD. Bei Netzfehler wird "existiert" angenommen. */
+const tldKnown=new Set(["com","de","net","org","es","ru","tech","io","app","ai","dev","cc"]),tldCache=new Map();
+function tldExists(tld){if(tldKnown.has(tld))return Promise.resolve(true);let p=tldCache.get(tld);if(!p){p=(async()=>{for(let a=0;a<2;a++){try{const s=await doh(tld);if(s===3)return false;if(s===0)return true}catch(e){}if(a<1)await sleep(400)}return true})();tldCache.set(tld,p)}return p}
 async function checkFast(domain){for(let a=0;a<3;a++){if(ctl.stop)return"unclear";try{const s=await doh(domain);if(s===3)return"free";if(s===0)return"taken"}catch(e){}if(a<2)await sleep(400*(a+1))}return"unclear"}
-let rdapMap=null;
-async function rdapBase(tld){if(!rdapMap){try{const j=await(await fetch("https://data.iana.org/rdap/dns.json")).json(),m={};for(const[tl,urls]of j.services){const b=urls.find(u=>u.startsWith("https://"));if(!b)continue;for(const x of tl)m[x.toLowerCase()]=b}rdapMap=m}catch(e){return null}}return rdapMap[tld]}
+let rdapMap=null,rdapFail=0;
+async function rdapBase(tld){if(!rdapMap){if(Date.now()<rdapFail)return null; /* Negativ-Cache: nach Fehlschlag 60 s nicht erneut versuchen */
+ try{const j=await(await fetch("https://data.iana.org/rdap/dns.json",{signal:AbortSignal.timeout(8000)})).json(),m={};for(const[tl,urls]of j.services){const b=urls.find(u=>u.startsWith("https://"));if(!b)continue;for(const x of tl)m[x.toLowerCase()]=b}rdapMap=m}catch(e){rdapFail=Date.now()+60000;return null}}return rdapMap[tld]}
 /* RDAP-Server drosseln viele Anfragen (z. B. DENIC für .de: HTTP 429). Darum pro Server: wenig parallel, Mindestabstand, Pause bei 429/5xx. */
 const rdapHost={};
 function hostState(b){return rdapHost[b]||(rdapHost[b]={active:0,next:0,pause:0,gap:150,q:[]})}
@@ -499,12 +508,12 @@ async function rdap(domain,tld){const b=await rdapBase(tld);if(!b)return"weak";
   if(st===404)return"free";if(st===200)return"taken";
   if(a<5)await sleep(thr?0:600*(a+1))}
  return"weak"}
-async function check(label,tld){if(validate(label))return"unclear";const d=label+"."+tld,r=await checkFast(d);if(r!=="free"||S.acc!=="thorough")return r;
+async function check(label,tld){if(validate(label))return"unclear";if(!await tldExists(tld)){run.badTLDs.add(tld);return"unclear"}const d=label+"."+tld,r=await checkFast(d);if(r!=="free"||S.acc!=="thorough")return r;
  let x=await rdap(d,tld);if(x==="weak"&&!ctl.stop&&tld!=="de"){await sleep(2500);x=await rdap(d,tld)}return x}
 
 /* ---------- Lauf ---------- */
-let run={rows:new Map(),runTLDs:[],weak:0,weakSet:new Set(),total:0,done:0,free:0,unclear:0,t0:0,running:false};
-const rate=()=>parseFloat(localStorage.getItem("rate_"+S.acc))||(S.acc=="fast"?40:10);
+let run={rows:new Map(),runTLDs:[],weak:0,weakSet:new Set(),badTLDs:new Set(),total:0,done:0,free:0,unclear:0,t0:0,running:false};
+const rate=()=>{let v=0;try{v=parseFloat(localStorage.getItem("rate_"+S.acc))}catch(e){}return v>0?v:(S.acc=="fast"?40:10)};
 function startPressed(){if(run.running||!canStart())return;if(queryCount()>20000){$("#bigMsg").textContent=t("big",fmt(queryCount()));$("#dBig").showModal()}else start()}
 async function start(){
  let src,count;
@@ -513,7 +522,7 @@ async function start(){
  else{const l=buildExpand();src=i=>l[i];count=l.length}
  const tlds=activeTLDs();if(!tlds.length||!count)return;
  const acc=S.acc;ctl={stop:false};
- run={rows:new Map(),runTLDs:tlds,weak:0,weakSet:new Set(),total:count*tlds.length,done:0,free:0,unclear:0,t0:performance.now(),running:true};
+ run={rows:new Map(),runTLDs:tlds,weak:0,weakSet:new Set(),badTLDs:new Set(),total:count*tlds.length,done:0,free:0,unclear:0,t0:performance.now(),running:true};
  ui();draw();
  let next=0,last=0,tmr=0;const conc=acc=="fast"?24:12;
  const worker=async()=>{while(!ctl.stop&&next<run.total){const k=next++,label=src(Math.floor(k/tlds.length)),tld=tlds[k%tlds.length],st=await check(label,tld);
@@ -564,7 +573,7 @@ function ui(){
  $("#favBtn").textContent="⭐ "+t("fav")+(S.fav.length?` (${S.fav.length})`:"");
  $("#simpleBox").classList.toggle("hide",!simple());$("#advBox").classList.toggle("hide",simple());
  for(const id of["kwS","kwA"]){const e=$("#"+id);if(e!==document.activeElement)e.value=S.kw;e.disabled=busy}
- const kl=keywordList();$("#hint").textContent=kl.length?t("will")+kl.slice(0,8).join(", ")+(kl.length>8?" …":""):t("hintEmpty");
+ const kl=keywordList();$("#hint").textContent=(kl.length?t("will")+kl.slice(0,8).join(", ")+(kl.length>8?" …":""):t("hintEmpty"))+(nonLatin(S.kw)?" ⚠ "+t("nonlat"):"");
  /* Endungen */
  const pr=$("#presets");pr.innerHTML="";for(const[k,v]of Object.entries(PRESETS)){const b=document.createElement("button");b.className="chip"+(S.tlds.length==v.length&&v.every(x=>S.tlds.includes(x))?" on":"");b.textContent=k=="tech"?"Tech":t(k);b.title=v.map(x=>"."+x).join(" ");b.disabled=busy;b.onclick=()=>set("tlds",[...v]);pr.appendChild(b)}
  const a=activeTLDs(),sm=$("#tldSum");sm.textContent=a.length?a.map(x=>"."+x).join("  "):t("noext");sm.className="note"+(a.length?"":" err");
@@ -620,6 +629,7 @@ function draw(){
  for(const[l,fs]of rows)h+=`<tr><td>${esc(l)}</td>${run.runTLDs.map(x=>fs.has(x)?`<td><button class="free" data-d="${esc(l+"."+x)}" aria-haspopup="menu" aria-label="${esc(l+"."+x+" – "+t("avail"))}" title="${esc(l+"."+x)}${run.weakSet.has(l+"."+x)?" – "+esc(t(x==="de"?"weakDe":"weakTip")):""}">${isFav(l+"."+x)?"⭐":run.weakSet.has(l+"."+x)?"🟡":"✅"}</button></td>`:`<td><span class="no">·</span></td>`).join("")}</tr>`;
  h+="</tbody></table>";
  if(!run.running&&[...run.weakSet].some(x=>x.endsWith(".de")))h+=`<p class="note" style="padding:8px 12px">${esc(t("weakDeNote"))}</p>`;
+ if(run.badTLDs.size)h+=`<p class="note err" style="padding:8px 12px">${esc(t("badTld",[...run.badTLDs].map(x=>"."+x).join(", ")))}</p>`;
  if(run.rows.size>1000)h+=`<p class="note" style="padding:8px 12px">${esc(t("shown",fmt(1000),fmt(run.rows.size)))}</p>`;
  if(!run.running&&!run.rows.size)h+=`<div class="empty">${esc(t("noRes"))}</div>`;
  tb.innerHTML=h}
