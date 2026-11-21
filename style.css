@@ -93,7 +93,7 @@ main .hero h1{font-size:clamp(26px,8vw,40px)}
 @media (max-width:380px){header .brand{font-size:22px}header .brand img{width:44px;height:44px}}
 
 /* ===== Apple-Look, Variante B ===== */
-/* Apple-Look für Domain at Call – drei Varianten über <html data-design="a|b|c">. Rein CSS, die Logik bleibt unverändert. */
+/* Apple-Look für Domain at Call – aktives Design: <html data-design="b"> (Glas). Rein CSS, die Logik bleibt unverändert. */
 html[data-design]{--rc:18px;--rs:10px;--bl:none;--sh:0 1px 2px rgba(0,0,0,.04),0 4px 16px rgba(0,0,0,.05);--pb:var(--ac);--pbt:#fff;--page:var(--pg);--hd:color-mix(in srgb,var(--pg) 72%,transparent)}
 html[data-design=b]{--pg:#f5f5f7;--pn:#fff;--fd:#f2f2f7;--ln:rgba(0,0,0,.1);--tx:#1d1d1f;--mt:#6e6e73;--ac:#0066cc;--sg:rgba(118,118,128,.12);--th:#fff;--fl:rgba(118,118,128,.12)}
 html[data-design=b]{--rc:26px;--rs:12px;--pn:rgba(255,255,255,.62);--fd:rgba(255,255,255,.75);--ln:rgba(255,255,255,.7);--bl:blur(28px) saturate(180%);--sh:0 8px 32px rgba(40,60,120,.12),inset 0 1px 0 rgba(255,255,255,.8);--page:radial-gradient(60% 50% at 12% 0,#cfe3ff,transparent),radial-gradient(50% 40% at 92% 8%,#f1d8ff,transparent),radial-gradient(60% 50% at 50% 100%,#d4fff0,transparent),#f5f5f7}
@@ -155,7 +155,7 @@ html[data-design] #tool .favrow{border-bottom:.5px solid var(--ln)}
 html[data-design] #tool progress{height:6px;border-radius:3px}
 html[data-design] #tool .coffee{background:rgba(255,159,10,.14);border:0;border-radius:var(--rc)}
 html[data-design] #tool .err{color:var(--bad)}
-/* C: Produktseite – zentrierter Kopf, ruhige Flächen */
+/* Mobil: kompaktere Karten (gilt für jedes data-design) */
 @media(max-width:520px){html[data-design] #tool .card{padding:16px}html[data-design] #tool dialog{padding:20px}}
 
 
