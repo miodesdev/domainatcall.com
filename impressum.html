@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src https:; manifest-src 'self'; base-uri 'self'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
 <title>Impressum – domain at call</title>
 <meta name="description" content="Impressum von Dmitry Korotkiy, Ismaning, Deutschland.">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
@@ -17,21 +17,22 @@
 <link rel="canonical" href="https://domainatcall.com/impressum.html">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#1637E8">
-<script>(function(){var d=document.documentElement,p=new URLSearchParams(location.search).get('lang'),l=(p==='de'||p==='en'||p==='ru')?p:null;if(!l){var a=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language];l='en';for(var i=0;i<a.length;i++){var n=String(a[i]||'').toLowerCase().split('-')[0];if(n==='de'||n==='en'||n==='ru'){l=n;break}}}d.setAttribute('lang',l);d.setAttribute('data-lang',l)})();</script>
+<script src="lang.js"></script>
 <link rel="stylesheet" href="style.css">
 <noscript><style>@media (max-width:700px){.burger{display:none!important}.menu{display:block!important}}</style></noscript>
 </head>
-<body data-title-de="Impressum" data-title-en="Legal notice" data-title-ru="Выходные данные (Impressum)">
+<body data-title-de="Impressum – domain at call" data-title-en="Legal notice – domain at call" data-title-ru="Выходные данные – domain at call">
+<a class="skip" href="#main"><span class="de" lang="de">Zum Inhalt springen</span><span class="en" lang="en">Skip to content</span><span class="ru" lang="ru">Перейти к содержимому</span></a>
 <header><div class="wrap">
-<a class="brand" data-i="index.html" href="index.html"><picture><source media="(prefers-color-scheme: dark)" srcset="logo-dark.svg?v=4"><img src="logo-light.svg?v=4" alt="" width="34" height="34"></picture><span class="bn"><strong>domain</strong> <em>at call</em></span></a>
+<a class="brand" data-i="index.html" href="index.html"><picture><source media="(prefers-color-scheme: dark)" srcset="logo-dark.svg?v=5"><img src="logo-light.svg?v=5" alt="" width="34" height="34"></picture><span class="bn"><strong>domain</strong> <em>at call</em></span></a>
 <button class="burger" type="button" aria-expanded="false" aria-controls="menu"><span class="sr de" lang="de">Menü</span><span class="sr en" lang="en">Menu</span><span class="sr ru" lang="ru">Меню</span><i></i><i></i><i></i></button>
 <div class="menu" id="menu">
 <nav><a data-i="hilfe.html" href="hilfe.html"><span class="de" lang="de">Hilfe</span><span class="en" lang="en">Help</span><span class="ru" lang="ru">Справка</span></a>
 <a href="https://dk-ai.de/" rel="noopener">DK-AI</a></nav>
-<div class="lang" aria-label="Language"><a href="?lang=de" data-l="de" hreflang="de">DE</a><a href="?lang=en" data-l="en" hreflang="en">EN</a><a href="?lang=ru" data-l="ru" hreflang="ru">RU</a></div>
+<div class="lang" role="group" aria-label="Language / Sprache / Язык"><a href="?lang=de" data-l="de" hreflang="de">DE</a><a href="?lang=en" data-l="en" hreflang="en">EN</a><a href="?lang=ru" data-l="ru" hreflang="ru">RU</a></div>
 </div>
 </div></header>
-<main><div class="wrap">
+<main id="main" tabindex="-1"><div class="wrap">
 <div class="de" lang="de"><h1>Impressum</h1>
 <h2>Angaben gemäß § 5 DDG</h2>
 <p>Dmitry Korotkiy<br>
@@ -42,9 +43,6 @@ Deutschland</p>
 <h2>Kontakt</h2>
 <p>Telefon: <a href="tel:+4915150111317">+49 151 50 111 317</a><br>
 E-Mail: <a href="mailto:info@domainatcall.com">info@domainatcall.com</a></p>
-<!-- USt-IdNr.: beantragt, noch nicht erteilt. Sobald vorhanden, hier ergänzen:
-<h2>Umsatzsteuer-Identifikationsnummer</h2>
-<p>Umsatzsteuer-Identifikationsnummer gemäß § 27a Umsatzsteuergesetz: DE…</p> -->
 <h2>Verbraucherstreitbeilegung</h2>
 <p>Ich bin nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
 <h2>Haftung für Links</h2>
