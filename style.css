@@ -103,8 +103,8 @@ html[data-design=b]{--pn:rgba(44,44,46,.55);--fd:rgba(255,255,255,.08);--ln:rgba
 html[data-design] body{background:var(--page);background-attachment:fixed;color:var(--tx);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased}
 html[data-design] header{background:var(--hd);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:.5px solid var(--ln)}
 html[data-design] header .wrap{min-height:72px}
-html[data-design] header .brand{font-size:28px;font-weight:600;letter-spacing:-.02em;color:var(--tx)}
-html[data-design] header .brand img{width:46px;height:46px}
+html[data-design] header .brand{font-size:24px;font-weight:600;letter-spacing:-.02em;color:var(--tx)}
+html[data-design] header .brand img{width:40px;height:40px}
 html[data-design] nav a{color:var(--tx);font-size:14px}
 html[data-design] .lang a{border:0;background:var(--fl);border-radius:999px;color:var(--tx)}
 html[data-design][data-lang=de] .lang a[data-l=de],html[data-design][data-lang=en] .lang a[data-l=en],html[data-design][data-lang=ru] .lang a[data-l=ru]{background:var(--pb);color:var(--pbt)}
@@ -186,7 +186,7 @@ html[data-design] #tool .coffee .donate{font-size:17px;padding:14px 26px}
 @media(max-width:700px){html[data-design] .menu{background:color-mix(in srgb,var(--pg) 94%,transparent);-webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px)}}
 @media(max-width:520px){html[data-design] .donate,html[data-design] #tool .coffee .donate{white-space:normal;text-align:center;line-height:1.25;padding:14px 18px;font-size:16px;width:100%}html[data-design] body:not(:has(#tool)) main>.wrap{padding:22px 18px 26px;border-radius:22px}html[data-design] .titlerow>.donate{align-self:stretch}html[data-design] #tool .coffee{padding:16px;font-size:17px}}
 
-@media(max-width:700px){html[data-design] header .wrap{min-height:60px}html[data-design] header .brand{font-size:22px}html[data-design] header .brand img{width:36px;height:36px}}
+@media(max-width:700px){html[data-design] header .wrap{min-height:60px}html[data-design] header .brand{font-size:19px}html[data-design] header .brand img{width:32px;height:32px}}
 
 /* Barrierefreiheit: Bewegung reduzieren, wenn das System es verlangt */
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
